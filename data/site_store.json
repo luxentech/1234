@@ -1,0 +1,20 @@
+{
+  "luxen_all_users": [
+    {
+      "id": "admin_001",
+      "username": "admin@elevate.com",
+      "fullName": "المدير العام",
+      "phone": "01000000000",
+      "password": "",
+      "isAdmin": true,
+      "isActive": true,
+      "isOnline": true,
+      "join_date": "٦‏/١١‏/٢٠٢٦",
+      "join_timestamp": 1793988259573,
+      "password_hash": "pbkdf2$100000$hNvNpuNOZb50JBsDiicu2Q==$7Qi77GZJsh6nQ4WyVHJUmfndUAkQuxjyiPt+PQMNJeE=",
+      "failed_attempts": 0,
+      "locked_until": 0,
+      "last_login": 1793988306256
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789579813952,
+      "tag": "0000_live_workshop_hub_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789680676382,
+      "tag": "0001_app_accounts_and_store_history",
+      "breakpoints": true
+    }
+  ]
+}
