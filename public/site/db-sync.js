@@ -68,14 +68,36 @@
 
   function applyServerStore(store) {
     KEYS.forEach(function (k) {
-      if (dirty[k]) return; // keep local edits that are not confirmed yet
       if (store && Object.prototype.hasOwnProperty.call(store, k) && store[k] !== null) {
+        // If it's a merge-only array like luxen_all_users, merge with local data instead of blindly skipping!
+        if (dirty[k] && Array.isArray(store[k])) {
+          var localArr = [];
+          try { localArr = JSON.parse(sharedStore[k] || "[]"); } catch (e) {}
+          if (Array.isArray(localArr)) {
+            var merged = localArr.slice();
+            store[k].forEach(function (sItem) {
+              if (!sItem) return;
+              var sId = sItem.id || sItem.username || sItem.email;
+              var exists = merged.some(function (lItem) {
+                return lItem && (lItem.id === sId || lItem.username === sId || lItem.email === sId);
+              });
+              if (!exists) merged.push(sItem);
+            });
+            var rawMerged = JSON.stringify(merged);
+            sharedStore[k] = rawMerged;
+            cacheWrite(k, rawMerged);
+            return;
+          }
+        }
+        if (dirty[k]) return; // keep local unconfirmed edits for other keys
         var raw = JSON.stringify(store[k]);
         sharedStore[k] = raw;
         cacheWrite(k, raw);
       } else {
-        delete sharedStore[k];
-        cacheWrite(k, null);
+        if (!dirty[k]) {
+          delete sharedStore[k];
+          cacheWrite(k, null);
+        }
       }
     });
   }
@@ -97,6 +119,7 @@
         .then(function (payload) {
           applyServerStore((payload && payload.data) || {});
           window.dispatchEvent(new CustomEvent("elevate_sync_complete"));
+          rerender();
         })
         .catch(function (e) {
           console.warn("[Elevate] background sync using local cache", e);
@@ -110,6 +133,7 @@
             var payload = JSON.parse(xhr.responseText);
             applyServerStore((payload && payload.data) || {});
             window.dispatchEvent(new CustomEvent("elevate_sync_complete"));
+            rerender();
           }
         };
         xhr.send(null);
@@ -253,11 +277,7 @@
       if (window.ElevateExtras && typeof ElevateExtras.refresh === "function") {
         ElevateExtras.refresh();
       }
-      if (
-        window.Admin &&
-        typeof Admin.init === "function" &&
-        document.getElementById("admin-manage-partners-list")
-      ) {
+      if (window.Admin && typeof Admin.init === "function") {
         Admin.init();
       }
     } catch (e) {}

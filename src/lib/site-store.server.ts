@@ -76,7 +76,6 @@ const DATA_FILE = path.resolve(DATA_DIR, "site_store.json");
 
 const inMemoryStore = new Map<string, unknown>();
 let isStoreLoaded = false;
-let saveDebounceTimer: NodeJS.Timeout | null = null;
 
 function loadLocalStoreFromFile(): void {
   if (isStoreLoaded) return;
@@ -105,7 +104,9 @@ function persistLocalStoreToFile(): void {
     for (const [k, v] of inMemoryStore.entries()) {
       obj[k] = v;
     }
-    fs.writeFileSync(DATA_FILE, JSON.stringify(obj, null, 2), "utf-8");
+    const tempFile = path.resolve(DATA_DIR, `site_store.${Date.now()}.${Math.random().toString(36).slice(2, 6)}.tmp`);
+    fs.writeFileSync(tempFile, JSON.stringify(obj, null, 2), "utf-8");
+    fs.renameSync(tempFile, DATA_FILE);
   } catch (err) {
     console.warn("[Elevate Local Store] Error saving file store:", err);
   }
@@ -128,11 +129,10 @@ export function getAllLocalMemoryStore(): Record<string, unknown> {
 export function setLocalMemoryStore(key: string, value: unknown): void {
   loadLocalStoreFromFile();
   inMemoryStore.set(key, value);
-  if (saveDebounceTimer) clearTimeout(saveDebounceTimer);
-  saveDebounceTimer = setTimeout(persistLocalStoreToFile, 300);
+  persistLocalStoreToFile();
 }
 
-/* --------------------------- Supabase Clients --------------------------- */
+/* --------------------------- Supabase Clients & Circuit Breaker --------------------------- */
 
 const PROJECT_ID = process.env["SUPABASE_PROJECT_ID"] || "nytexmvrypetsyhihady";
 const DIRECT_SUPABASE_URL = `https://${PROJECT_ID}.supabase.co`;
@@ -143,8 +143,12 @@ const CONFIG_KEY =
   import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
   "sb_publishable_oHMFI81bu6Vh7m2Jw3zhog_I4Q8k1-a";
 
-export const hasConfig = () => Boolean(CONFIG_KEY);
+export const hasConfig = () => true;
 export const hasServiceRole = () => Boolean(process.env["SUPABASE_SERVICE_ROLE_KEY"]);
+
+let isRemoteHealthy = false;
+let lastRemoteCheck = 0;
+const REMOTE_CHECK_COOLDOWN = 60_000; // 1 minute cooldown on failure
 
 function buildClient(url: string, key: string): SupabaseClient<Database> {
   return createClient<Database>(url, key, {
@@ -156,7 +160,19 @@ function buildClient(url: string, key: string): SupabaseClient<Database> {
           headers.delete("Authorization");
         }
         headers.set("apikey", key);
-        return fetch(input, { ...init, headers });
+
+        // Enforce strict 1500ms timeout so dead domains/network NEVER hang the server
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 1500);
+
+        const existingSignal = init?.signal;
+        if (existingSignal) {
+          existingSignal.addEventListener("abort", () => controller.abort());
+        }
+
+        return fetch(input, { ...init, headers, signal: controller.signal }).finally(() => {
+          clearTimeout(timeout);
+        });
       },
     },
   });
@@ -271,66 +287,69 @@ export function redactUsers(value: unknown): unknown {
 }
 
 export async function readStoreKey(key: string): Promise<unknown> {
-  // 1. Try primary Supabase client
-  try {
-    const client = getClient();
-    const { data, error } = await client
-      .from("site_store")
-      .select("value")
-      .eq("key", key)
-      .maybeSingle();
-    if (!error && data && data.value !== undefined) {
-      setLocalMemoryStore(key, data.value);
-      return data.value;
-    }
-  } catch (err) {
-    // Try fallback direct Supabase client
-    try {
-      const fbClient = getFallbackClient();
-      if (fbClient) {
-        const { data, error } = await fbClient
-          .from("site_store")
-          .select("value")
-          .eq("key", key)
-          .maybeSingle();
-        if (!error && data && data.value !== undefined) {
-          setLocalMemoryStore(key, data.value);
-          return data.value;
-        }
-      }
-    } catch {}
+  // 1. Check local server store first (instant sub-millisecond return)
+  const localVal = getLocalMemoryStore(key);
+  if (localVal !== null && localVal !== undefined) {
+    return localVal;
   }
-  // 2. Return from resilient local store (always works even offline / error 1016)
-  return getLocalMemoryStore(key);
+
+  // 2. Only if local store has no value, attempt remote Supabase if circuit breaker allows
+  const now = Date.now();
+  if (isRemoteHealthy || now - lastRemoteCheck > REMOTE_CHECK_COOLDOWN) {
+    lastRemoteCheck = now;
+    try {
+      const client = getClient();
+      const { data, error } = await client
+        .from("site_store")
+        .select("value")
+        .eq("key", key)
+        .maybeSingle();
+      if (!error && data && data.value !== undefined) {
+        isRemoteHealthy = true;
+        setLocalMemoryStore(key, data.value);
+        return data.value;
+      }
+      if (error) isRemoteHealthy = false;
+    } catch {
+      isRemoteHealthy = false;
+    }
+  }
+
+  return localVal;
 }
 
 export async function writeStoreKey(key: string, value: unknown, source: string): Promise<void> {
-  // 1. Always update local store immediately so data is NEVER lost and write never fails
+  // 1. Immediately update server database (guaranteed persistence, 0 data loss, instant response)
   setLocalMemoryStore(key, value);
 
-  // 2. Persist to remote Supabase in background
-  try {
-    const client = getClient();
-    await client.from("site_store_history").insert({ key, value: value as never, source }).catch(() => {});
-    const { error } = await client
-      .from("site_store")
-      .upsert(
-        { key, value: value as never, updated_at: new Date().toISOString() },
-        { onConflict: "key" },
-      );
-    if (error) {
-      const fbClient = getFallbackClient();
-      if (fbClient) {
-        await fbClient
-          .from("site_store")
-          .upsert(
-            { key, value: value as never, updated_at: new Date().toISOString() },
-            { onConflict: "key" },
-          )
-          .catch(() => {});
-      }
+  // 2. Non-blocking asynchronous sync to remote Supabase in background
+  void (async () => {
+    const now = Date.now();
+    if (!isRemoteHealthy && now - lastRemoteCheck < REMOTE_CHECK_COOLDOWN) {
+      return;
     }
-  } catch (e) {
-    console.warn("[Elevate Store] Remote Supabase write deferred, safely kept in local storage:", e);
-  }
+    lastRemoteCheck = now;
+    try {
+      const client = getClient();
+      await client
+        .from("site_store_history")
+        .insert({ key, value: value as never, source })
+        .catch(() => {});
+
+      const { error } = await client
+        .from("site_store")
+        .upsert(
+          { key, value: value as never, updated_at: new Date().toISOString() },
+          { onConflict: "key" },
+        );
+
+      if (!error) {
+        isRemoteHealthy = true;
+      } else {
+        isRemoteHealthy = false;
+      }
+    } catch {
+      isRemoteHealthy = false;
+    }
+  })();
 }

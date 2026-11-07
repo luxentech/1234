@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   ALLOWED_KEYS,
   ALLOWED_KEY_SET,
-  getClient,
+  getAllLocalMemoryStore,
   hasConfig,
   json,
   mergeValues,
@@ -12,11 +12,10 @@ import { checkAdminCredentials, issueAdminToken, verifyAdminToken } from "@/lib/
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit.server";
 
 async function readAll(): Promise<Record<string, unknown>> {
-  const { data, error } = await getClient().from("site_store").select("key,value");
-  if (error) throw new Error(error.message);
+  const localAll = getAllLocalMemoryStore();
   const out: Record<string, unknown> = {};
-  for (const row of data ?? []) {
-    if (ALLOWED_KEY_SET.has(row.key)) out[row.key] = row.value;
+  for (const [k, v] of Object.entries(localAll)) {
+    if (ALLOWED_KEY_SET.has(k)) out[k] = v;
   }
   return out;
 }

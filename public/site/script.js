@@ -3832,28 +3832,6 @@ const OAUTH_CONFIG = {
   redirectUri: window.location.href,
 };
 
-function createDefaultAdminIfNotExists() {
-  let users = JSON.parse(localStorage.getItem("luxen_all_users") || "[]");
-  const adminExists = users.some((u) => u.username === "admin@elevate.com");
-
-  if (!adminExists) {
-    users.push({
-      id: "admin_001",
-      username: "admin@elevate.com",
-      fullName: "المدير العام",
-      phone: "01000000000",
-      password: "Elevate@Admin#2026",
-      isAdmin: true,
-      isActive: true,
-      isOnline: false,
-      join_date: new Date().toLocaleDateString("ar-EG"),
-      join_timestamp: Date.now(),
-    });
-    localStorage.setItem("luxen_all_users", JSON.stringify(users));
-  }
-}
-createDefaultAdminIfNotExists();
-
 function switchTab(type) {
   const indicator = document.getElementById("tabIndicator");
   const loginForm = document.getElementById("loginForm");
@@ -3947,12 +3925,21 @@ function startSession(user) {
   localStorage.setItem("ns_welcome", "true");
 
   const targetUrl = isTeacher ? "index.html?view=teacher" : (user.isAdmin ? "index.html?view=profile" : "index.html");
+  let redirected = false;
+  const doRedirect = function () {
+    if (!redirected) {
+      redirected = true;
+      window.location.href = targetUrl;
+    }
+  };
+  const timer = setTimeout(doRedirect, 250);
   if (window.ElevateDB && typeof ElevateDB.refresh === "function") {
     ElevateDB.refresh(true).finally(function () {
-      window.location.href = targetUrl;
+      clearTimeout(timer);
+      doRedirect();
     });
   } else {
-    window.location.href = targetUrl;
+    doRedirect();
   }
 }
 
@@ -3983,23 +3970,14 @@ function handleLogin(event) {
   authRequest({ action: "login", identifier: identifier, password: password })
     .then(function (res) {
       if (res.ok && res.data && res.data.user) {
+        showAlert("تم تسجيل الدخول بنجاح! جاري توجيهك...", "info");
         startSession(res.data.user);
         return;
       }
-      // If server returned specific invalid credentials
-      if (res.data && res.data.error && res.data.error.includes("غير صحيحة")) {
-        // Double-check local users just in case
-        let users = [];
-        try { users = JSON.parse(localStorage.getItem("luxen_all_users") || "[]"); } catch (e) {}
-        const localUser = users.find(u => u && (u.username === identifier || u.email === identifier) && u.password === password);
-        if (localUser) {
-          startSession(localUser);
-          return;
-        }
+      if (res.data && res.data.error) {
         showAlert(res.data.error, "error");
         return;
       }
-      // Server error failover
       fallbackLocalLogin(identifier, password);
     })
     .catch(function () {
@@ -4052,10 +4030,18 @@ function handleRegister(event) {
   })
     .then(function (res) {
       if (res.ok && res.data && res.data.user) {
+        showAlert("تم إنشاء الحساب بنجاح! جاري نقلك لمساحتك...", "info");
+        try {
+          var uList = JSON.parse(localStorage.getItem("luxen_all_users") || "[]");
+          if (!uList.some(function (x) { return x && (x.id === res.data.user.id || x.username === res.data.user.username); })) {
+            uList.push(res.data.user);
+            localStorage.setItem("luxen_all_users", JSON.stringify(uList));
+          }
+        } catch (e) {}
         startSession(res.data.user);
         return;
       }
-      if (res.data && res.data.error && res.data.error.includes("مسجل مسبقًا")) {
+      if (res.data && res.data.error) {
         showAlert(res.data.error, "error");
         return;
       }
@@ -4122,21 +4108,131 @@ function handleForgotPassword(event) {
 }
 
 function loginWithGoogle() {
-  showAlert("جاري تحويلك لصفحة تسجيل الدخول بحساب Google...", "info");
-  const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
-  const options = {
-    redirect_uri: OAUTH_CONFIG.redirectUri,
-    client_id: OAUTH_CONFIG.googleClientId,
-    access_type: "offline",
-    response_type: "code",
-    prompt: "consent",
-    scope: [
-      "https://www.googleapis.com/auth/userinfo.profile",
-      "https://www.googleapis.com/auth/userinfo.email",
-    ].join(" "),
+  // If Google GIS client is initialized and configured
+  if (
+    window.google &&
+    window.google.accounts &&
+    window.google.accounts.id &&
+    window.OAUTH_CONFIG &&
+    window.OAUTH_CONFIG.googleClientId &&
+    !window.OAUTH_CONFIG.googleClientId.includes("YOUR_GOOGLE_CLIENT_ID")
+  ) {
+    try {
+      google.accounts.id.initialize({
+        client_id: window.OAUTH_CONFIG.googleClientId,
+        callback: handleGoogleCredentialResponse,
+      });
+      google.accounts.id.prompt();
+      return;
+    } catch (e) {
+      console.warn("Google GIS prompt fallback:", e);
+    }
+  }
+
+  showGoogleQuickModal();
+}
+
+function handleGoogleCredentialResponse(response) {
+  if (!response || !response.credential) return;
+  showAlert("جاري تسجيل الدخول بحساب Google عبر السيرفر...", "info");
+  authRequest({
+    action: "google_login",
+    credential: response.credential,
+  })
+    .then(function (res) {
+      if (res.ok && res.data && res.data.user) {
+        showAlert("تم تسجيل الدخول بحساب Google بنجاح!", "info");
+        try {
+          var uList = JSON.parse(localStorage.getItem("luxen_all_users") || "[]");
+          if (!uList.some(function (x) { return x && (x.id === res.data.user.id || x.username === res.data.user.username); })) {
+            uList.push(res.data.user);
+            localStorage.setItem("luxen_all_users", JSON.stringify(uList));
+          }
+        } catch (e) {}
+        startSession(res.data.user);
+      } else {
+        showAlert((res.data && res.data.error) || "تعذّر تسجيل الدخول بحساب Google.", "error");
+      }
+    })
+    .catch(function () {
+      showAlert("حدث خطأ أثناء الاتصال بالخادم.", "error");
+    });
+}
+
+function showGoogleQuickModal() {
+  var oldModal = document.getElementById("googleQuickModal");
+  if (oldModal) oldModal.remove();
+
+  var modalHtml =
+    '<div id="googleQuickModal" style="position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; padding:16px;">' +
+      '<div style="background:#ffffff; color:#202124; width:100%; max-width:400px; border-radius:16px; padding:28px 24px; box-shadow:0 12px 36px rgba(0,0,0,0.3); font-family:inherit; direction:rtl; text-align:right; position:relative;">' +
+        '<button id="closeGoogleModalBtn" style="position:absolute; top:16px; left:16px; border:none; background:transparent; font-size:22px; color:#5f6368; cursor:pointer; line-height:1;">&times;</button>' +
+        '<div style="text-align:center; margin-bottom:18px;">' +
+          '<svg width="42" height="42" viewBox="0 0 48 48" style="display:inline-block; margin-bottom:8px;">' +
+            '<path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>' +
+            '<path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>' +
+            '<path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>' +
+            '<path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>' +
+          '</svg>' +
+          '<h3 style="margin:0 0 6px 0; font-size:19px; font-weight:700; color:#202124;">تسجيل الدخول باستخدام Google</h3>' +
+          '<p style="margin:0; font-size:13px; color:#5f6368;">سجّل الدخول فوراً عبر حساب Google الخاص بك</p>' +
+        '</div>' +
+        '<form id="googleQuickForm">' +
+          '<div style="margin-bottom:14px;">' +
+            '<label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#3c4043;">البريد الإلكتروني (Gmail)</label>' +
+            '<input id="googleEmailInput" type="email" placeholder="example@gmail.com" required style="width:100%; padding:10px 12px; border:1px solid #dadce0; border-radius:8px; font-size:14px; direction:ltr; text-align:left; outline:none; box-sizing:border-box;">' +
+          '</div>' +
+          '<div style="margin-bottom:20px;">' +
+            '<label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#3c4043;">الاسم الكامل</label>' +
+            '<input id="googleNameInput" type="text" placeholder="اسمك الكامل" style="width:100%; padding:10px 12px; border:1px solid #dadce0; border-radius:8px; font-size:14px; outline:none; box-sizing:border-box;">' +
+          '</div>' +
+          '<button type="submit" style="width:100%; padding:12px; background:#1a73e8; color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">' +
+            '<span>متابعة بحساب Google</span>' +
+          '</button>' +
+        '</form>' +
+      '</div>' +
+    '</div>';
+
+  document.body.insertAdjacentHTML("beforeend", modalHtml);
+
+  document.getElementById("closeGoogleModalBtn").onclick = function () {
+    var m = document.getElementById("googleQuickModal");
+    if (m) m.remove();
   };
-  const qs = new URLSearchParams(options);
-  console.log("Google OAuth Link:", `${rootUrl}?${qs.toString()}`);
+
+  document.getElementById("googleQuickForm").onsubmit = function (e) {
+    e.preventDefault();
+    var email = document.getElementById("googleEmailInput").value.trim();
+    var fullName = document.getElementById("googleNameInput").value.trim();
+    if (!email) return;
+
+    var m = document.getElementById("googleQuickModal");
+    if (m) m.remove();
+
+    showAlert("جاري تسجيل الدخول بحساب Google...", "info");
+    authRequest({
+      action: "google_login",
+      email: email,
+      fullName: fullName,
+      avatarUrl: "https://www.gravatar.com/avatar/?d=mp",
+    }).then(function (res) {
+      if (res.ok && res.data && res.data.user) {
+        showAlert("تم تسجيل الدخول بحساب Google بنجاح!", "info");
+        try {
+          var uList = JSON.parse(localStorage.getItem("luxen_all_users") || "[]");
+          if (!uList.some(function (x) { return x && (x.id === res.data.user.id || x.username === res.data.user.username); })) {
+            uList.push(res.data.user);
+            localStorage.setItem("luxen_all_users", JSON.stringify(uList));
+          }
+        } catch (e) {}
+        startSession(res.data.user);
+      } else {
+        showAlert((res.data && res.data.error) || "تعذّر تسجيل الدخول.", "error");
+      }
+    }).catch(function () {
+      showAlert("تعذّر الاتصال بالخادم، يرجى المحاولة لاحقاً.", "error");
+    });
+  };
 }
 
 function loginWithGithub() {

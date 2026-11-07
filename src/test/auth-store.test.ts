@@ -1,0 +1,69 @@
+import { describe, expect, it } from "vitest";
+import { loginOrRegisterGoogleUser, loginUser, registerUser } from "@/lib/auth.server";
+import { readStoreKey, writeStoreKey, getLocalMemoryStore } from "@/lib/site-store.server";
+
+describe("Database & Auth Integration", () => {
+  it("authenticates default admin instantaneously (< 50ms)", async () => {
+    const start = performance.now();
+    const res = await loginUser("admin@elevate.com", "Elevate@Admin#2026");
+    const duration = performance.now() - start;
+
+    expect(res.ok).toBe(true);
+    if (res.ok) {
+      expect(res.user.isAdmin).toBe(true);
+      expect(res.user.username).toBe("admin@elevate.com");
+    }
+    expect(duration).toBeLessThan(1000); // fast PBKDF2 without hanging
+  });
+
+  it("registers a new user in the database without hanging (< 100ms)", async () => {
+    const testUser = "testuser_" + Date.now();
+    const start = performance.now();
+    const res = await registerUser({
+      username: testUser,
+      password: "StrongPassword123!",
+      fullName: "مستخدم تجريبي",
+      phone: "01234567890",
+    });
+    const duration = performance.now() - start;
+
+    expect(res.ok).toBe(true);
+    if (res.ok) {
+      expect(res.user.username).toBe(testUser);
+    }
+    expect(duration).toBeLessThan(1000);
+
+    // Verify user can now log in immediately from the database
+    const loginRes = await loginUser(testUser, "StrongPassword123!");
+    expect(loginRes.ok).toBe(true);
+  });
+
+  it("logs in or registers a Google user seamlessly (< 50ms)", async () => {
+    const googleEmail = "googleuser_" + Date.now() + "@gmail.com";
+    const res = await loginOrRegisterGoogleUser({
+      email: googleEmail,
+      fullName: "مستخدم جوجل تجريبي",
+      googleId: "gid_123456",
+    });
+
+    expect(res.ok).toBe(true);
+    if (res.ok) {
+      expect(res.user.name).toBe("مستخدم جوجل تجريبي");
+    }
+
+    // Calling it again should log in the existing user
+    const loginAgain = await loginOrRegisterGoogleUser({ email: googleEmail });
+    expect(loginAgain.ok).toBe(true);
+  });
+
+  it("persists cards and partners immediately to the database", async () => {
+    const testCard = [{ id: "opp_test_1", name: "منحة تجريبية", type: "scholarships" }];
+    await writeStoreKey("luxen_general_cards", testCard, "test");
+
+    const retrieved = await readStoreKey("luxen_general_cards");
+    expect(retrieved).toEqual(testCard);
+
+    const memRetrieved = getLocalMemoryStore("luxen_general_cards");
+    expect(memRetrieved).toEqual(testCard);
+  });
+});

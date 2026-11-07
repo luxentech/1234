@@ -3,6 +3,7 @@ import { hasConfig, json } from "@/lib/site-store.server";
 import {
   adminRejectReset,
   adminSetPassword,
+  loginOrRegisterGoogleUser,
   loginUser,
   registerUser,
   requestPasswordReset,
@@ -11,6 +12,29 @@ import {
 import { adminTokenSubject, issueAdminToken, verifyAdminToken } from "@/lib/admin-token.server";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit.server";
 import { sanitizeString } from "@/lib/sanitize.server";
+
+function decodeGoogleToken(credential: string): { email?: string; name?: string; picture?: string; sub?: string } {
+  try {
+    const parts = credential.split(".");
+    if (parts.length >= 2) {
+      const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+      const jsonStr = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join(""),
+      );
+      const payload = JSON.parse(jsonStr);
+      return {
+        email: payload.email,
+        name: payload.name || payload.given_name,
+        picture: payload.picture,
+        sub: payload.sub,
+      };
+    }
+  } catch {}
+  return {};
+}
 
 export const Route = createFileRoute("/api/public/auth")({
   server: {
@@ -83,6 +107,49 @@ export const Route = createFileRoute("/api/public/auth")({
               : json({ error: res.error }, res.status);
           } catch (err) {
             return json({ error: "تعذّر تسجيل الحساب، يرجى مراجعة البيانات والمحاولة مجدداً." }, 400);
+          }
+        }
+
+        if (action === "google_login") {
+          const rate = checkRateLimit(ip, {
+            windowMs: 60 * 1000,
+            maxRequests: 300,
+            keyPrefix: "auth-google",
+          });
+          if (!rate.allowed) {
+            return json({ error: "محاولات كثيرة جداً، يرجى الانتظار قليلاً." }, 429);
+          }
+
+          let email = str("email");
+          let fullName = str("fullName");
+          let avatarUrl = str("avatarUrl");
+          let googleId = str("googleId");
+
+          const credential = typeof body["credential"] === "string" ? body["credential"] : "";
+          if (credential) {
+            const decoded = decodeGoogleToken(credential);
+            if (decoded.email) email = decoded.email;
+            if (decoded.name) fullName = decoded.name;
+            if (decoded.picture) avatarUrl = decoded.picture;
+            if (decoded.sub) googleId = decoded.sub;
+          }
+
+          if (!email) {
+            return json({ error: "لم يتم استلام البريد الإلكتروني لحساب Google." }, 400);
+          }
+
+          try {
+            const res = await loginOrRegisterGoogleUser({
+              email,
+              fullName,
+              avatarUrl,
+              googleId,
+            });
+            return res.ok
+              ? json({ ok: true, user: res.user })
+              : json({ error: res.error }, res.status);
+          } catch (err) {
+            return json({ error: "تعذّر تسجيل الدخول بحساب Google، يرجى المحاولة لاحقاً." }, 500);
           }
         }
 

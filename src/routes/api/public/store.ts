@@ -25,35 +25,10 @@ export const Route = createFileRoute("/api/public/store")({
     handlers: {
       GET: async () => {
         const out: Record<string, unknown> = {};
-
-        // 1. Try fetching from Supabase
-        let remoteRows: { key: string; value: unknown }[] | null = null;
-        try {
-          const { data, error } = await getClient().from("site_store").select("key,value");
-          if (!error && data) remoteRows = data;
-        } catch (e) {
-          try {
-            const fb = getFallbackClient();
-            if (fb) {
-              const { data, error } = await fb.from("site_store").select("key,value");
-              if (!error && data) remoteRows = data;
-            }
-          } catch {}
-        }
-
-        if (remoteRows && remoteRows.length > 0) {
-          for (const row of remoteRows) {
-            if (!ALLOWED_KEY_SET.has(row.key)) continue;
-            setLocalMemoryStore(row.key, row.value);
-            out[row.key] = row.key === "luxen_all_users" ? redactUsers(row.value) : row.value;
-          }
-        } else {
-          // If remote fails or is empty, serve from resilient local store (never 500 error!)
-          const localAll = getAllLocalMemoryStore();
-          for (const [k, v] of Object.entries(localAll)) {
-            if (!ALLOWED_KEY_SET.has(k)) continue;
-            out[k] = k === "luxen_all_users" ? redactUsers(v) : v;
-          }
+        const localAll = getAllLocalMemoryStore();
+        for (const [k, v] of Object.entries(localAll)) {
+          if (!ALLOWED_KEY_SET.has(k)) continue;
+          out[k] = k === "luxen_all_users" ? redactUsers(v) : v;
         }
 
         return json({ data: out });
