@@ -1628,6 +1628,7 @@ const App = {
     const container = document.getElementById("opp-cards-container");
     if (!container) return;
 
+    const stats = JSON.parse(localStorage.getItem("luxen_category_status") || "{}");
     const user = this.getUser();
     const isAdmin = user && user.isAdmin === true;
 
@@ -1647,7 +1648,7 @@ const App = {
 
     container.innerHTML = cards
       .map((c) => {
-        if (c.status === "hidden" && !isAdmin) return "";
+        if (!isAdmin && (c.status === "hidden" || stats[c.type] === "hidden")) return "";
 
         let tInfo = typeInfo[c.type] || { name: c.type, class: "competition" };
 

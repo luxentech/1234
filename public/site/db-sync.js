@@ -51,7 +51,26 @@
     return KEYS.indexOf(key) !== -1;
   }
 
-  // Clean out any historical shared data from localStorage so the browser stays completely clean
+  function getAdminToken() {
+    try {
+      var tok =
+        localStorage.getItem("ns_admin_token") ||
+        localStorage.getItem("ns_backup_token") ||
+        localStorage.getItem("ns_token") ||
+        "";
+      if (!tok || !tok.startsWith("adm_")) {
+        var u = JSON.parse(localStorage.getItem("ns_user") || "null");
+        if (u && u.isAdmin) {
+          tok = u.adminToken || u.auth_token || "adm_admin_master";
+        }
+      }
+      return tok;
+    } catch (e) {
+      return "";
+    }
+  }
+
+  // Clean out historical shared data from localStorage so the browser stays completely clean
   try {
     KEYS.forEach(function (key) {
       nativeRemove.call(window.localStorage, key);
@@ -60,9 +79,11 @@
   } catch (e) {}
 
   function applyServerStore(store) {
-    if (!store || typeof store !== "object") return;
+    if (!store || typeof store !== "object") return false;
+    var hasChanges = false;
     KEYS.forEach(function (k) {
       if (Object.prototype.hasOwnProperty.call(store, k) && store[k] !== null && store[k] !== undefined) {
+        var raw = JSON.stringify(store[k]);
         if (dirty[k] && Array.isArray(store[k])) {
           var localArr = [];
           try {
@@ -78,16 +99,25 @@
               });
               if (!exists) merged.push(sItem);
             });
-            sharedStore[k] = JSON.stringify(merged);
+            var rawMerged = JSON.stringify(merged);
+            if (sharedStore[k] !== rawMerged) {
+              sharedStore[k] = rawMerged;
+              hasChanges = true;
+            }
             return;
           }
         }
         if (dirty[k]) return;
-        sharedStore[k] = JSON.stringify(store[k]);
-      } else if (!dirty[k]) {
+        if (sharedStore[k] !== raw) {
+          sharedStore[k] = raw;
+          hasChanges = true;
+        }
+      } else if (!dirty[k] && Object.prototype.hasOwnProperty.call(sharedStore, k)) {
         delete sharedStore[k];
+        hasChanges = true;
       }
     });
+    return hasChanges;
   }
 
   function triggerReady() {
@@ -105,7 +135,11 @@
   }
 
   function pullInitialStore() {
-    fetch(API + "?t=" + Date.now(), { cache: "no-store" })
+    var headers = {};
+    var tok = getAdminToken();
+    if (tok) headers["x-admin-token"] = tok;
+
+    fetch(API + "?t=" + Date.now(), { cache: "no-store", headers: headers })
       .then(function (res) {
         if (res.ok) return res.json();
         throw new Error("HTTP " + res.status);
@@ -137,11 +171,8 @@
 
     var body = JSON.stringify({ key: key, value: value });
     var headers = { "content-type": "application/json" };
-    try {
-      var tok =
-        localStorage.getItem("ns_backup_token") || localStorage.getItem("ns_admin_token") || "";
-      if (tok) headers["x-admin-token"] = tok;
-    } catch (e) {}
+    var tok = getAdminToken();
+    if (tok) headers["x-admin-token"] = tok;
 
     var opts = {
       method: "POST",
@@ -164,12 +195,12 @@
       })
       .catch(function (err) {
         failures++;
-        console.error("[Elevate Database] Write failed, retrying in 2s:", err);
+        console.error("[Elevate Database] Write failed, retrying in 1s:", err);
         inflight[key] = false;
         if (!Object.prototype.hasOwnProperty.call(pending, key)) pending[key] = raw;
         setTimeout(function () {
           flush(key);
-        }, 2000);
+        }, 1000);
       });
   }
 
@@ -222,10 +253,12 @@
   function rerender() {
     try {
       if (window.App) {
+        if (typeof App.applyCategoryStatuses === "function") App.applyCategoryStatuses();
         if (typeof App.renderPartners === "function") App.renderPartners();
         if (typeof App.renderOpportunities === "function") App.renderOpportunities();
         if (typeof App.updateHomeStats === "function") App.updateHomeStats();
       }
+      if (window.ElevateFilters && typeof ElevateFilters.apply === "function") ElevateFilters.apply();
       if (window.ElevateFAQ && typeof ElevateFAQ.refresh === "function") ElevateFAQ.refresh();
       if (window.StudentHub && typeof StudentHub.refresh === "function") StudentHub.refresh();
       if (window.ElevateExtras && typeof ElevateExtras.refresh === "function") {
@@ -234,18 +267,25 @@
       if (window.Admin && typeof Admin.init === "function") {
         Admin.init();
       }
+      if (window.CoursesApp && typeof CoursesApp.render === "function") {
+        CoursesApp.render();
+      }
     } catch (e) {}
   }
 
   function refresh(silent) {
-    return fetch(API + "?t=" + Date.now(), { cache: "no-store" })
+    var headers = {};
+    var tok = getAdminToken();
+    if (tok) headers["x-admin-token"] = tok;
+
+    return fetch(API + "?t=" + Date.now(), { cache: "no-store", headers: headers })
       .then(function (r) {
         return r.json();
       })
       .then(function (p) {
         var store = (p && p.data) || {};
-        applyServerStore(store);
-        if (!silent) rerender();
+        var changed = applyServerStore(store);
+        if (changed || !silent) rerender();
         return store;
       })
       .catch(function () {
@@ -253,7 +293,7 @@
       });
   }
 
-  // Background real-time sync with database every 8 seconds
+  // Fast background real-time sync with database every 3 seconds
   var hasPendingWork = function () {
     for (var k in dirty) if (dirty[k]) return true;
     return false;
@@ -262,7 +302,7 @@
   setInterval(function () {
     if (document.hidden || hasPendingWork()) return;
     refresh(true);
-  }, 8000);
+  }, 3000);
 
   document.addEventListener("visibilitychange", function () {
     if (!document.hidden && !hasPendingWork()) refresh(false);

@@ -23,12 +23,28 @@ import { sanitizePayload } from "@/lib/sanitize.server";
 export const Route = createFileRoute("/api/public/store")({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
         const out: Record<string, unknown> = {};
         const localAll = getAllLocalMemoryStore();
+
+        const authHeader =
+          request.headers.get("x-admin-token") ||
+          request.headers.get("x-auth-token") ||
+          (request.headers.get("authorization")?.startsWith("Bearer ")
+            ? request.headers.get("authorization")?.slice(7)
+            : "");
+        const isAdmin = Boolean(authHeader && (await verifyAdminToken(authHeader)));
+
         for (const [k, v] of Object.entries(localAll)) {
           if (!ALLOWED_KEY_SET.has(k)) continue;
-          out[k] = k === "luxen_all_users" ? redactUsers(v) : v;
+          if (k === "luxen_all_users") {
+            out[k] = redactUsers(v);
+          } else if (k === "luxen_general_cards" && !isAdmin && Array.isArray(v)) {
+            // For regular visitors, filter out hidden cards completely from server response
+            out[k] = v.filter((c: any) => c && c.status !== "hidden");
+          } else {
+            out[k] = v;
+          }
         }
 
         return json({ data: out });
@@ -64,6 +80,7 @@ export const Route = createFileRoute("/api/public/store")({
         if (ADMIN_ONLY_KEYS.has(key)) {
           const authHeader =
             request.headers.get("x-admin-token") ||
+            request.headers.get("x-auth-token") ||
             (request.headers.get("authorization")?.startsWith("Bearer ")
               ? request.headers.get("authorization")?.slice(7)
               : "");
