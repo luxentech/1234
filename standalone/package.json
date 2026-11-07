@@ -1,0 +1,9 @@
+{
+  "name": "elevate-standalone",
+  "version": "1.0.0",
+  "description": "منصة Elevate المستقلة مع السيرفر وقاعدة البيانات",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

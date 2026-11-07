@@ -1,0 +1,854 @@
+/* ==========================================================================
+   Elevate Arena — Live Platform Competitions & Battles
+   مسابقات المنصة المباشرة والتحديات وجهاً لوجه
+   ========================================================================== */
+
+:root {
+  --arena-bg: #090d16;
+  --arena-card-bg: #111827;
+  --arena-gold: #f59e0b;
+  --arena-gold-gradient: linear-gradient(135deg, #f59e0b, #d97706);
+  --arena-blue: #3b82f6;
+  --arena-red: #ef4444;
+  --arena-border: rgba(255, 255, 255, 0.08);
+}
+
+#contests-view {
+  min-height: 100vh;
+  background: var(--arena-bg);
+  color: #f8fafc;
+  font-family: "Cairo", "Tajawal", sans-serif;
+  padding-bottom: 80px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Background Atmosphere */
+.arena-bg-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 500px;
+  background: radial-gradient(
+    circle at 50% 10%,
+    rgba(245, 158, 11, 0.12) 0%,
+    rgba(59, 130, 246, 0.08) 50%,
+    transparent 80%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.arena-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================
+   Hero Header
+   ========================================== */
+.arena-hero {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.arena-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+  padding: 6px 16px;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+.arena-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 10px 0;
+  line-height: 1.3;
+}
+
+.arena-title span {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b, #ef4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.arena-subtitle {
+  font-size: 0.98rem;
+  color: #94a3b8;
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   Countdown Timer Deck (Scheduled Phase)
+   ========================================== */
+.arena-countdown-card {
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24px;
+  padding: 30px 24px;
+  text-align: center;
+  margin-bottom: 35px;
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(245, 158, 11, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+.arena-countdown-header {
+  margin-bottom: 20px;
+}
+
+.arena-countdown-header h3 {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 6px 0;
+}
+
+.arena-countdown-header p {
+  color: #fbbf24;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.arena-timer-grid {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.arena-timer-box {
+  background: #0b0f19;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 14px 18px;
+  min-width: 80px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.arena-timer-number {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fbbf24;
+  line-height: 1;
+}
+
+.arena-timer-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 6px;
+  font-weight: 700;
+}
+
+/* ==========================================
+   Duel Stage (Live Phase: Head-to-Head VS Cards)
+   ========================================== */
+.arena-stage-wrapper {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  margin-bottom: 35px;
+}
+
+.arena-stage-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--arena-border);
+  margin-bottom: 24px;
+}
+
+.arena-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.arena-live-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 10px #ef4444;
+  animation: arenaPulse 1.4s infinite;
+}
+
+@keyframes arenaPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+.arena-spectators-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* The VS Duel Arena (Two Contestant Cards) */
+.arena-vs-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 768px) {
+  .arena-vs-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.arena-contestant-card {
+  background: #111827;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.arena-contestant-card.contestant-1 {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.arena-contestant-card.contestant-2 {
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.arena-contestant-card.winner {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 35px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.12) 0%, #111827 100%);
+}
+
+.arena-contestant-card.active-speaker {
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.5);
+  animation: glowCard 1.5s infinite alternate;
+}
+
+@keyframes glowCard {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.02);
+  }
+}
+
+.arena-contestant-avatar {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 12px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.contestant-1 .arena-contestant-avatar {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.contestant-2 .arena-contestant-avatar {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.arena-contestant-name {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 4px 0;
+}
+
+.arena-contestant-age {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 10px;
+  border-radius: 99px;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+.arena-contestant-score {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.arena-mic-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.06);
+  color: #94a3b8;
+}
+
+.arena-mic-status.speaking {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+/* VS Badge in the Center */
+.arena-vs-badge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.arena-vs-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ef4444, #f59e0b);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+  border: 3px solid #0f172a;
+}
+
+/* Active Speaker / Winner Highlight Banner */
+.arena-active-announcement {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(5, 150, 105, 0.25));
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  border-radius: 16px;
+  padding: 14px 20px;
+  text-align: center;
+  color: #6ee7b7;
+  font-weight: 800;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  animation: bannerSlide 0.3s ease-out;
+}
+
+@keyframes bannerSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Question & Live Challenge Box */
+.arena-question-box {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.arena-question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.arena-question-text {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+}
+
+.arena-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .arena-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.arena-option-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 14px 18px;
+  color: #e2e8f0;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.arena-option-btn:hover {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fff;
+}
+
+.arena-option-btn.correct {
+  background: rgba(16, 185, 129, 0.25) !important;
+  border-color: #10b981 !important;
+  color: #fff !important;
+}
+
+/* ==========================================
+   Live Spectator Chat & Interactions Stream
+   ========================================== */
+.arena-spectators-area {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+@media (max-width: 900px) {
+  .arena-spectators-area {
+    grid-template-columns: 1fr;
+  }
+}
+
+.arena-chat-box {
+  background: #111827;
+  border: 1px solid var(--arena-border);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 380px;
+  overflow: hidden;
+}
+
+.arena-chat-header {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--arena-border);
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arena-chat-stream {
+  flex: 1;
+  padding: 14px 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.arena-chat-msg {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.arena-chat-sender {
+  color: #818cf8;
+  font-weight: 800;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+.arena-chat-body {
+  color: #e2e8f0;
+  word-break: break-word;
+}
+
+.arena-chat-footer {
+  padding: 10px 14px;
+  border-top: 1px solid var(--arena-border);
+  display: flex;
+  gap: 8px;
+  background: #0b0f19;
+}
+
+.arena-chat-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 9px 14px;
+  color: #fff;
+  font-size: 0.88rem;
+  outline: none;
+  font-family: inherit;
+}
+
+.arena-chat-send-btn {
+  background: var(--arena-gold-gradient);
+  border: none;
+  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  color: #000;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Quick Reaction Bar */
+.arena-reactions-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.arena-reaction-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.arena-reaction-btn:hover {
+  transform: scale(1.2);
+  background: rgba(245, 158, 11, 0.2);
+}
+
+/* ==========================================
+   Applicant Registration Card (Registration Phase)
+   ========================================== */
+.arena-reg-card {
+  background: #0f172a;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 24px;
+  padding: 32px 28px;
+  max-width: 680px;
+  margin: 0 auto 35px auto;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.arena-reg-counter-box {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(234, 88, 12, 0.15));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.arena-reg-counter-number {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fbbf24;
+  margin: 4px 0;
+}
+
+.arena-field-group {
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.arena-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #cbd5e1;
+  margin-bottom: 6px;
+}
+
+.arena-input,
+.arena-textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--arena-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #fff;
+  font-size: 0.92rem;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.arena-input:focus,
+.arena-textarea:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+}
+
+.arena-submit-btn {
+  width: 100%;
+  background: var(--arena-gold-gradient);
+  color: #000;
+  border: none;
+  border-radius: 14px;
+  padding: 14px;
+  font-weight: 900;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.arena-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
+}
+
+/* ==========================================
+   Admin Section Styles (#adm-sec-contests)
+   ========================================== */
+.admin-contests-deck {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-contests-state-banner {
+  background: #111827;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* ==========================================
+   Coming Soon Notice & Modal & Badges
+   ========================================== */
+.contest-soon-pill {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.28), rgba(239, 68, 68, 0.28));
+  border: 1px solid rgba(245, 158, 11, 0.65);
+  color: #fbbf24;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 1px 8px;
+  border-radius: 999px;
+  margin-right: 6px;
+  vertical-align: middle;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
+  letter-spacing: 0.3px;
+  animation: pulseSoon 2s infinite ease-in-out;
+}
+
+@keyframes pulseSoon {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.85;
+  }
+}
+
+.contest-coming-soon-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeInModal 0.25s ease-out;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.contest-coming-soon-box {
+  background: linear-gradient(145deg, #131d2e, #0a0f1d);
+  border: 2px solid rgba(245, 158, 11, 0.45);
+  border-radius: 26px;
+  padding: 36px 30px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow:
+    0 25px 65px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(245, 158, 11, 0.25);
+  position: relative;
+  box-sizing: border-box;
+  animation: slideUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpModal {
+  from {
+    transform: translateY(22px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.contest-cs-icon {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 18px auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, rgba(245, 158, 11, 0.05) 70%);
+  border: 2px solid rgba(245, 158, 11, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: #fbbf24;
+  box-shadow: 0 0 28px rgba(245, 158, 11, 0.45);
+}
+
+.contest-cs-badge {
+  display: inline-block;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: #fbbf24;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 4px 16px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.contest-cs-title {
+  color: #fff;
+  font-size: 1.65rem;
+  font-weight: 900;
+  margin: 0 0 12px 0;
+}
+
+.contest-cs-desc {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0 0 24px 0;
+}
+
+.contest-cs-btn {
+  background: var(--arena-gold-gradient, linear-gradient(135deg, #f59e0b, #d97706));
+  color: #000;
+  font-weight: 900;
+  font-size: 0.98rem;
+  padding: 13px 30px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.38);
+  font-family: inherit;
+}
+
+.contest-cs-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(245, 158, 11, 0.6);
+}
+
+.contest-vis-card {
+  transition: all 0.25s ease;
+}
+
+.contest-vis-card:hover {
+  transform: translateY(-2px);
+}

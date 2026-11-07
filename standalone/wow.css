@@ -1,0 +1,68 @@
+#wow-progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 4px;
+  width: 0;
+  z-index: 99999;
+  background: linear-gradient(90deg, #0284c7, #0891b2, #059669);
+  transition: width 0.1s;
+}
+#wow-top {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  z-index: 9999;
+  background: linear-gradient(135deg, #0284c7, #059669);
+  color: #fff;
+  font-size: 20px;
+  box-shadow: 0 10px 30px rgba(2, 132, 199, 0.3);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.3s;
+}
+#wow-top.show {
+  opacity: 1;
+  transform: none;
+}
+#wow-top:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+.wow-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+.wow-reveal.in {
+  opacity: 1;
+  transform: none;
+}
+#wow-quote {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 28px 32px;
+  border-radius: 24px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.06), rgba(5, 150, 105, 0.05));
+  border: 1px solid rgba(2, 132, 199, 0.18);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--text-primary);
+}
+#wow-quote small {
+  display: block;
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+#wow-quote .q {
+  transition: opacity 0.5s;
+}

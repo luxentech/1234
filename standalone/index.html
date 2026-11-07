@@ -1,0 +1,3789 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark" translate="no" class="notranslate">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
+    <meta http-equiv="Content-Language" content="ar" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Elevate — اكتشف فرصتك التالية | مسابقات · منح · تطوع · وظائف</title>
+    <meta
+      name="description"
+      content="Elevate هي منصتك الشاملة لاكتشاف المسابقات والمنح الدراسية وفرص التطوع والوظائف للطلاب والخريجين."
+    />
+
+    <link rel="icon" href="images/Elevate.png?v=2" type="image/png" />
+    <link rel="apple-touch-icon" href="images/logo.png" />
+
+    <!-- تثبيت الموقع على الموبايل (PWA) -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#090d16" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Elevate" />
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=20261106_statuscontrol" />
+    <link rel="stylesheet" href="student-hub.css?v=20261106_footerpro" />
+    <link rel="stylesheet" href="wow.css?v=1" />
+    <link rel="stylesheet" href="elevate-boost.css?v=2" />
+    <link rel="stylesheet" href="profile-plus.css?v=1" />
+    <link rel="stylesheet" href="admin-pro.css?v=20261106_statuscontrol" />
+    <link rel="stylesheet" href="community.css?v=1" />
+    <link rel="stylesheet" href="shorts.css?v=3" />
+    <link rel="stylesheet" href="contests.css?v=1" />
+    <link rel="stylesheet" href="courses.css?v=1" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="elevate-security.js?v=20261020"></script>
+    <script src="db-sync.js?v=20261107_realsql"></script>
+  </head>
+  <body class="lang-ar">
+    <div id="navbar-placeholder"></div>
+
+    <main class="page-wrapper">
+      <!-- =========================================
+       القسم الأول: الصفحة الرئيسية
+  ========================================= -->
+      <div id="home-view">
+        <!-- HERO SECTION -->
+        <section class="hero hero-ultra">
+          <div class="hero-bg">
+            <div class="hero-bg-gradient"></div>
+            <div class="hero-bg-grid"></div>
+            <div class="hero-bg-animated-shapes">
+              <div class="floating-shape shape-1"></div>
+              <div class="floating-shape shape-2"></div>
+              <div class="floating-shape shape-3"></div>
+            </div>
+            <div class="hero-orb hero-orb-1"></div>
+            <div class="hero-orb hero-orb-2"></div>
+          </div>
+
+          <div class="container hero-container-centered">
+            <div class="hero-content-centered">
+              <div class="hero-badge fade-in">
+                <span class="hero-badge-dot"></span>
+                <span
+                  data-en="🚀 +50 New Opportunities This Week"
+                  data-ar="🚀 +50 فرصة جديدة هذا الأسبوع"
+                  >🚀 +50 New Opportunities This Week</span
+                >
+              </div>
+
+              <h1 class="hero-title fade-in stagger-1">
+                <span data-en="Unlock Your" data-ar="افتح الطريق">Unlock Your</span><br />
+                <span class="text-gradient" data-en="Dream Future" data-ar="لمستقبلك"
+                  >Dream Future</span
+                ><br />
+                <span data-en="Today" data-ar="اليوم">Today</span>
+              </h1>
+
+              <p
+                class="hero-subtitle fade-in stagger-2"
+                data-en="Join thousands discovering life-changing opportunities. Scholarships, competitions, jobs & volunteering programs - all in one place."
+                data-ar="انضم لآلاف المستفيدين واكتشف فرص تغير حياتك. منح دراسية، مسابقات، وظائف وبرامج تطوع - كل شيء في مكان واحد."
+              >
+                Join thousands discovering life-changing opportunities. Scholarships, competitions,
+                jobs & volunteering programs - all in one place.
+              </p>
+
+              <div class="hero-search-box fade-in stagger-3">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  id="hero-search-input"
+                  placeholder="ابحث عن الفرصة المثالية لك (تطوع، منحة، مسابقة، ايفينت)..."
+                  data-en-placeholder="Find your perfect opportunity (volunteering, scholarship, events)..."
+                  data-ar-placeholder="ابحث عن الفرصة المثالية لك (تطوع، منحة، مسابقة، ايفينت)..."
+                  autocomplete="off"
+                />
+                <div class="search-glow"></div>
+                <div id="hero-search-results" class="hero-search-results" style="display: none"></div>
+              </div>
+
+              <div class="hero-cta fade-in stagger-4">
+                <a href="?category=competitions" class="btn btn-primary btn-xl btn-hero-primary btn-glow">
+                  <i class="fas fa-rocket"></i>
+                  <span data-en="Explore Opportunities" data-ar="استكشف الفرص"
+                    >استكشف الفرص</span
+                  >
+                  <div class="btn-shine"></div>
+                </a>
+
+                <a
+                  href="?view=login"
+                  class="btn btn-secondary btn-xl btn-hero-secondary register-btn-hero btn-glow"
+                  id="hero-register-btn"
+                >
+                  <i class="fas fa-star" style="color: #fbbf24"></i>
+                  <span data-en="Start Free Now" data-ar="ابدأ مجاناً الآن">ابدأ مجاناً الآن</span>
+                  <div class="btn-shine"></div>
+                </a>
+              </div>
+
+              <div class="hero-quick-pills fade-in stagger-4">
+                <a href="?view=community" class="hero-pill-item pill-community">
+                  <i class="fas fa-comments"></i>
+                  <span data-en="Community" data-ar="مجتمع Elevate">المجتمع</span>
+                </a>
+
+                <a href="?view=shorts" class="hero-pill-item pill-shorts">
+                  <i class="fas fa-play"></i>
+                  <span data-en="Elevate Shorts" data-ar="شورتس">شورتس</span>
+                </a>
+
+                <a
+                  href="?view=contests"
+                  id="hero-contest-btn"
+                  data-contest-link="true"
+                  class="hero-pill-item pill-contests"
+                >
+                  <i class="fas fa-trophy"></i>
+                  <span data-en="Live Contests" data-ar="مسابقات المنصة">مسابقات المنصة</span>
+                </a>
+
+                <a href="?view=courses" class="hero-pill-item pill-courses">
+                  <i class="fas fa-graduation-cap"></i>
+                  <span data-en="Courses" data-ar="الكورسات">الكورسات</span>
+                </a>
+              </div>
+
+              <div class="hero-stats fade-in stagger-4">
+                <div class="hero-stat-item">
+                  <div class="hero-stat-number" id="stat-opps">يتم الحساب..</div>
+                  <div class="hero-stat-label" data-en="Active Opportunities" data-ar="فرصة نشطة">
+                    Active Opportunities
+                  </div>
+                </div>
+                <div class="hero-stat-item">
+                  <div class="hero-stat-number" id="stat-users">يتم الحساب..</div>
+                  <div class="hero-stat-label" data-en="Registered Members" data-ar="عدد الأعضاء">
+                    Registered Members
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FEATURED CATEGORIES SECTION -->
+        <section class="section-wrapper categories-section">
+          <div class="container">
+            <div class="section-header fade-in" style="align-items: center; text-align: center">
+              <div class="section-badge">
+                <i class="fas fa-th-large"></i>
+                <span data-en="Explore Categories" data-ar="استكشف التصنيفات"
+                  >استكشف التصنيفات</span
+                >
+              </div>
+              <h2 class="section-title" style="justify-content: center">
+                <span data-en="Top Opportunities" data-ar="أبرز المجالات">أبرز المجالات</span>
+              </h2>
+              <p
+                class="section-subtitle"
+                style="margin: 0 auto"
+                data-en="Find exactly what you're looking for across our diverse categories."
+                data-ar="ابحث بالتحديد عما يناسبك من خلال تصنيفاتنا المتنوعة."
+              >
+                ابحث بالتحديد عما يناسبك من خلال تصنيفاتنا المتنوعة.
+              </p>
+            </div>
+
+            <div class="categories-grid">
+              <a
+                href="?category=competitions"
+                data-section="competitions"
+                class="category-card fade-in stagger-1"
+                style="--theme-color: #6366f1"
+              >
+                <div class="cat-badge count-badge" data-count-cat="competitions">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-trophy"></i></div>
+                <h3 class="cat-title" data-en="Competitions" data-ar="مسابقات">مسابقات</h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <a
+                href="?category=scholarships"
+                data-section="scholarships"
+                class="category-card fade-in stagger-2"
+                style="--theme-color: #10b981"
+              >
+                <div class="cat-badge count-badge" data-count-cat="scholarships">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3 class="cat-title" data-en="Scholarships" data-ar="منح دراسية">منح دراسية</h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <a
+                href="?category=volunteering"
+                data-section="volunteering"
+                class="category-card fade-in stagger-3"
+                style="--theme-color: #f59e0b"
+              >
+                <div class="cat-badge count-badge" data-count-cat="volunteering">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-handshake"></i></div>
+                <h3 class="cat-title" data-en="Volunteering" data-ar="تطوع">تطوع</h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <a
+                href="?category=jobs"
+                data-section="jobs"
+                class="category-card fade-in stagger-4"
+                style="--theme-color: #06b6d4"
+              >
+                <div class="cat-badge count-badge" data-count-cat="jobs">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-briefcase"></i></div>
+                <h3 class="cat-title" data-en="Jobs" data-ar="وظائف">وظائف</h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <a
+                href="?category=events"
+                data-section="events"
+                class="category-card fade-in stagger-3"
+                style="--theme-color: #d97706"
+              >
+                <div class="cat-badge count-badge" data-count-cat="events">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-calendar-alt"></i></div>
+                <h3 class="cat-title" data-en="Events" data-ar="فعاليات">فعاليات</h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <!-- بطاقة 1: كورسات مجانية (الأصلية) -->
+              <a
+                href="?category=courses"
+                data-section="courses"
+                class="category-card fade-in stagger-1"
+                style="--theme-color: #3b82f6"
+              >
+                <div class="cat-badge count-badge" data-count-cat="courses">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-book-open"></i></div>
+                <h3 class="cat-title" data-en="Free Courses" data-ar="كورسات مجانية">
+                  كورسات مجانية
+                </h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <!-- بطاقة 2: كورسات مجانية ومدفوعة (الجديدة المستقلة) -->
+              <a
+                href="?view=courses"
+                data-section="free-paid-courses"
+                class="category-card fade-in stagger-2"
+                style="--theme-color: #8b5cf6"
+              >
+                <div class="cat-badge count-badge" id="courses-count-badge">0 كورس</div>
+                <div class="cat-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3 class="cat-title" data-en="Free & Paid Courses" data-ar="كورسات مجانية ومدفوعة">
+                  كورسات مجانية ومدفوعة
+                </h3>
+                <p class="cat-desc" data-en="Explore All Courses" data-ar="تصفح وابحث في الكورسات">
+                  تصفح وابحث في الكورسات
+                </p>
+              </a>
+
+              <a
+                href="?category=workshops"
+                data-section="workshops"
+                class="category-card fade-in stagger-2"
+                style="--theme-color: #ec4899"
+              >
+                <div class="cat-badge count-badge" data-count-cat="workshops">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3 class="cat-title" data-en="Workshops" data-ar="ورش عمل">ورش عمل</h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <a
+                href="?category=travel"
+                data-section="travel"
+                class="category-card fade-in stagger-3"
+                style="--theme-color: #14b8a6"
+              >
+                <div class="cat-badge count-badge" data-count-cat="travel">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-plane-departure"></i></div>
+                <h3 class="cat-title" data-en="Funded Travel" data-ar="فرص سفر ممولة">
+                  فرص سفر ممولة
+                </h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <a
+                href="?category=admission"
+                data-section="admission"
+                class="category-card fade-in stagger-4"
+                style="--theme-color: #4b5563"
+              >
+                <div class="cat-badge count-badge" data-count-cat="admission">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-university"></i></div>
+                <h3 class="cat-title" data-en="Admission" data-ar="قبول جامعي">قبول جامعي</h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <a
+                href="?category=live"
+                data-section="live"
+                class="category-card cat-live fade-in stagger-1"
+                style="--theme-color: #ef4444"
+              >
+                <div class="cat-badge live-badge"><span class="live-dot"></span> مباشر</div>
+                <div class="cat-icon"><i class="fas fa-video"></i></div>
+                <h3 class="cat-title" data-en="Live Workshops" data-ar="ورش عمل مباشر">
+                  ورش عمل مباشر
+                </h3>
+                <p class="cat-desc" data-en="Explore" data-ar="تصفح الفرص">تصفح الفرص</p>
+              </a>
+
+              <a
+                href="?category=videos"
+                data-section="videos"
+                class="category-card cat-videos fade-in stagger-2"
+                style="--theme-color: #f59e0b"
+              >
+                <div class="cat-badge count-badge" data-count-cat="videos">يتم الحساب..</div>
+                <div class="cat-icon"><i class="fas fa-clapperboard"></i></div>
+                <h3 class="cat-title" data-en="Videos" data-ar="فيديوهات">فيديوهات</h3>
+                <p class="cat-desc" data-en="Watch" data-ar="شاهد الفيديوهات">شاهد الفيديوهات</p>
+              </a>
+            </div>
+
+            <div class="show-more-container" id="show-more-container">
+              <button
+                class="btn btn-secondary btn-glow"
+                id="show-more-btn"
+                style="
+                  border-radius: 30px;
+                  padding: 12px 35px;
+                  font-weight: bold;
+                  background: var(--bg-glass);
+                "
+              >
+                <span data-en="Show More" data-ar="عرض المزيد">عرض المزيد</span>
+                <i
+                  class="fas fa-chevron-down"
+                  style="margin-right: 10px; font-size: 0.9em; transition: transform 0.3s ease"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- OUR PARTNERS SECTION -->
+        <section class="section-wrapper partners-section">
+          <div class="container">
+            <div class="section-header fade-in">
+              <div class="section-badge">
+                <i class="fas fa-handshake"></i>
+                <span data-en="Trusted Partners" data-ar="شركاء النجاح">شركاء النجاح</span>
+              </div>
+              <h2 class="section-title">
+                <span data-en="Our Partners" data-ar="شركاؤنا">شركاؤنا</span>
+              </h2>
+              <p
+                class="section-subtitle"
+                data-en="Organizations and platforms we are proud to collaborate with."
+                data-ar="المنظمات والمنصات التي نفخر بالتعاون معها لتقديم أفضل الفرص لك."
+              >
+                المنظمات والمنصات التي نفخر بالتعاون معها لتقديم أفضل الفرص لك.
+              </p>
+            </div>
+
+            <div class="partners-grid" id="dynamic-partners-grid">
+              <!-- الشركاء يتم جلبهم ديناميكياً عبر JavaScript -->
+            </div>
+          </div>
+        </section>
+
+        <!-- SUPPORT SECTION -->
+        <section class="section-wrapper support-section">
+          <div class="container">
+            <div class="glass-panel" style="padding: 40px; text-align: center; border-radius: 24px">
+              <div class="section-badge" style="margin-bottom: 15px">
+                <i class="fas fa-headset"></i>
+                <span>نحن هنا لمساعدتك</span>
+              </div>
+              <h2 class="section-title" style="justify-content: center; margin-bottom: 15px">
+                محتاج مساعدة؟ تواصل مع الدعم
+              </h2>
+              <p style="color: var(--text-secondary); margin-bottom: 30px; font-size: 1.1rem">
+                فريقنا جاهز للرد على استفساراتك، مساعدتك في التقديم، أو حل أي مشكلة تواجهك في
+                الموقع.
+              </p>
+              <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap">
+                <a
+                  href="mailto:contact.luxentech@gmail.com"
+                  class="btn btn-primary btn-xl btn-glow"
+                >
+                  <i class="fas fa-envelope"></i> راسلنا عبر البريد
+                </a>
+                <a
+                  href="https://wa.me/201124310907"
+                  target="_blank"
+                  class="btn btn-secondary btn-xl"
+                >
+                  <i class="fab fa-whatsapp" style="color: #25d366; font-size: 1.2rem"></i> تواصل
+                  واتساب
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section class="faq-section" id="faq-section" dir="rtl">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-title">الأسئلة الشائعة</h2>
+              <p class="section-subtitle">
+                جمعنا لك إجابات واضحة على أكثر الأسئلة اللي بتوصلنا من الطلاب والخريجين
+              </p>
+            </div>
+            <div id="faq-list" class="faq-list"></div>
+          </div>
+        </section>
+
+        <!-- CTA SECTION -->
+        <section class="cta-section">
+          <div class="cta-soft-bg" aria-hidden="true"></div>
+
+          <div class="cta-container">
+            <div class="cta-tag"><i class="fas fa-rocket"></i> انطلق نحو مستقبلك</div>
+            <h2 class="cta-title">
+              لا تنتظر الفرصة.. <br />
+              <span class="highlight">اصنعها الآن!</span>
+            </h2>
+            <p class="cta-desc">
+              اكتشف عالمًا من المسابقات، المنح الدراسية، والفرص المهنية المصممة خصيصًا لتطوير
+              مهاراتك وبناء مسارك نحو النجاح. ابدأ رحلتك معنا اليوم!
+            </p>
+            <div class="cta-buttons">
+              <button
+                class="btn-cta-primary"
+                id="cta-register-btn"
+                onclick="window.location.href = '?view=login'"
+              >
+                إنشاء حساب مجاني <i class="fas fa-arrow-left"></i>
+              </button>
+              <button
+                class="btn-cta-outline"
+                onclick="window.location.href = '?category=competitions'"
+              >
+                تصفح الفرص <i class="fas fa-compass"></i>
+              </button>
+            </div>
+            <div class="cta-trust">
+              <i class="fas fa-shield-check"></i> انضم لآلاف الطلاب | مجاني تماماً للأبد
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- =========================================
+       قسم الكورسات: كورسات مجانية ومدفوعة
+  ========================================= -->
+      <div id="courses-view" style="display: none; padding-top: 36px; padding-bottom: 80px">
+        <div class="courses-page-container">
+          <!-- شريط الرجوع للرئيسية والعنوان فقط -->
+          <div class="courses-topbar">
+            <button
+              type="button"
+              class="courses-back-btn"
+              onclick="window.location.href = 'index.html'"
+            >
+              <i class="fas fa-arrow-right"></i> الرجوع للرئيسية
+            </button>
+            <h1 class="courses-main-title">
+              <i class="fas fa-graduation-cap" style="color: #3b82f6"></i>
+              <span>كورسات مجانية ومدفوعة</span>
+            </h1>
+            <div class="courses-topbar-spacer"></div>
+          </div>
+
+          <!-- شريط البحث الفوري والتصنيفات -->
+          <div class="courses-search-wrapper">
+            <div class="courses-search-box">
+              <i class="fas fa-search courses-search-icon"></i>
+              <input
+                type="text"
+                id="courses-search-input"
+                class="courses-search-input"
+                placeholder="ابحث عن كورس، مدرس، تصنيف، أو هاشتاج..."
+                oninput="CoursesApp.handleSearch(this.value)"
+              />
+              <button
+                type="button"
+                id="courses-search-clear"
+                class="courses-search-clear"
+                onclick="CoursesApp.clearSearch()"
+                style="display: none"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <!-- أزرار التصفية السريعة -->
+            <div class="courses-filter-tabs">
+              <button
+                class="courses-filter-btn active"
+                data-filter="all"
+                onclick="CoursesApp.setFilter('all')"
+              >
+                <i class="fas fa-layer-group"></i> الكل (<span id="count-all-courses">0</span>)
+              </button>
+              <button
+                class="courses-filter-btn"
+                data-filter="free"
+                onclick="CoursesApp.setFilter('free')"
+              >
+                <i class="fas fa-gift" style="color: #10b981"></i> مجانية (<span
+                  id="count-free-courses"
+                  >0</span
+                >)
+              </button>
+              <button
+                class="courses-filter-btn"
+                data-filter="paid"
+                onclick="CoursesApp.setFilter('paid')"
+              >
+                <i class="fas fa-crown" style="color: #f59e0b"></i> مدفوعة (<span
+                  id="count-paid-courses"
+                  >0</span
+                >)
+              </button>
+            </div>
+          </div>
+
+          <!-- شبكة عرض الكورسات -->
+          <div id="courses-grid" class="courses-grid"></div>
+
+          <!-- رسالة في حالة عدم وجود نتائج -->
+          <div id="courses-empty" class="courses-empty-state" style="display: none">
+            <i
+              class="fas fa-search"
+              style="font-size: 3rem; color: #64748b; margin-bottom: 12px"
+            ></i>
+            <h3>لا توجد كورسات مطابقة لبحثك</h3>
+            <p>جرّب كلمات بحث أخرى أو تصفح كل الكورسات</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- =============================================================
+           لوحة تحكم وإدارة المدرس المستقلة (Dedicated Teacher Dashboard)
+      ============================================================= -->
+      <div id="teacher-view" style="display: none; padding-top: 30px; padding-bottom: 90px">
+        <div class="teacher-page-container" style="max-width: 1240px; margin: 0 auto; padding: 0 16px;">
+          
+          <!-- شريط أدوات علوي خاص بالمدرس -->
+          <div class="teacher-topbar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(56, 189, 248, 0.2); padding: 14px 20px; border-radius: 16px;">
+            <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+              <button
+                type="button"
+                class="courses-back-btn"
+                onclick="window.location.href = 'index.html'"
+                style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #e2e8f0; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;"
+              >
+                <i class="fas fa-arrow-right"></i> الرجوع للرئيسية
+              </button>
+              <a href="?view=courses" style="color: #38bdf8; text-decoration: none; font-size: 0.92rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fas fa-graduation-cap"></i> تصفح الكورسات في الموقع
+              </a>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="teacher-pill" style="font-size: 0.85rem; background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); padding: 6px 14px; border-radius: 20px; font-weight: 700;">
+                <i class="fas fa-user-check"></i> حساب مدرس معتمد
+              </span>
+              <button
+                type="button"
+                onclick="App.logout()"
+                style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); color: #f87171; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;"
+              >
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+              </button>
+            </div>
+          </div>
+
+          <!-- بطاقة الترحيب والبيانات الخاصة بالمدرس -->
+          <div class="teacher-hero-card" style="margin-bottom: 24px;">
+            <div class="teacher-hero-info">
+              <h2>
+                <i class="fas fa-chalkboard-teacher" style="color: #38bdf8"></i>
+                <span>مرحباً بك أستاذ </span><span id="teacher-profile-name" style="color: #38bdf8">المدرس</span>
+              </h2>
+              <p>صفحتك الخاصة والمستقلة لرفع ومتابعة وإدارة كورساتك وإحصائيات التفاعل وتفعيل الاشتراكات للطلاب.</p>
+            </div>
+            <button
+              type="button"
+              class="teacher-add-course-btn"
+              onclick="TeacherApp.toggleAddCourseForm()"
+            >
+              <i class="fas fa-cloud-arrow-up"></i> رفع كورس جديد من جهازي
+            </button>
+          </div>
+
+          <!-- إحصائيات المدرس ومتابعة الكورسات -->
+          <div class="admin-stats-row" style="margin-bottom: 24px">
+            <div class="admin-stat-box">
+              <div class="admin-stat-icon" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8">
+                <i class="fas fa-film"></i>
+              </div>
+              <div class="admin-stat-info">
+                <h3 id="teacher-stat-total-courses">0</h3>
+                <p>إجمالي كورساتي المنشورة</p>
+              </div>
+            </div>
+            <div class="admin-stat-box">
+              <div class="admin-stat-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+              <div class="admin-stat-info">
+                <h3 id="teacher-stat-subscribers">0</h3>
+                <p>إجمالي المشتركين المفعلين</p>
+              </div>
+            </div>
+            <div class="admin-stat-box">
+              <div class="admin-stat-icon" style="background: rgba(239, 68, 68, 0.15); color: #f87171">
+                <i class="fas fa-heart"></i>
+              </div>
+              <div class="admin-stat-info">
+                <h3 id="teacher-stat-likes">0</h3>
+                <p>إجمالي الإعجابات</p>
+              </div>
+            </div>
+            <div class="admin-stat-box">
+              <div class="admin-stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981">
+                <i class="fas fa-tags"></i>
+              </div>
+              <div class="admin-stat-info">
+                <h3 id="teacher-stat-type-breakdown" style="font-size: 1.1rem; line-height: 2">0 مجاني / 0 مدفوع</h3>
+                <p>توزيع الكورسات</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- نموذج رفع ملفات الفيديو والصور من الجهاز -->
+          <div id="teacher-add-course-form-card" class="course-form-card" style="display: none; margin-bottom: 24px;">
+            <div class="prof-card-header" style="color: #38bdf8; margin-bottom: 16px">
+              <span><i class="fas fa-upload"></i> رفع كورس جديد من جهازك</span>
+              <button
+                type="button"
+                class="courses-modal-close"
+                style="background: none; border: none; color: #94a3b8; font-size: 1.2rem; cursor: pointer"
+                onclick="TeacherApp.toggleAddCourseForm()"
+              >
+                &times;
+              </button>
+            </div>
+
+            <form id="teacher-add-course-form" onsubmit="TeacherApp.submitCourse(event)">
+              <div class="course-form-grid">
+                <div class="course-form-group">
+                  <label for="teacher-course-title">اسم الكورس *</label>
+                  <input
+                    type="text"
+                    id="teacher-course-title"
+                    placeholder="مثال: دورة برمجة وتطوير تطبيقات الويب الاحترافية"
+                    required
+                  />
+                </div>
+
+                <div class="course-form-group">
+                  <label for="teacher-course-category">تصنيف الكورس *</label>
+                  <select id="teacher-course-category">
+                    <option value="برمجة وتطوير">برمجة وتطوير</option>
+                    <option value="لغات وترجمة">لغات وترجمة</option>
+                    <option value="تصميم وجرافيكس">تصميم وجرافيكس</option>
+                    <option value="تسويق وإدارة">تسويق وإدارة</option>
+                    <option value="علوم وبيزنس">علوم وبيزنس</option>
+                    <option value="مهارات شخصية">مهارات شخصية</option>
+                    <option value="أخرى">أخرى</option>
+                  </select>
+                </div>
+
+                <!-- رفع ملف الفيديو من الجهاز -->
+                <div class="course-form-group">
+                  <label>رفع ملف الفيديو من جهازك (MP4, WebM, MOV) *</label>
+                  <div
+                    id="teacher-video-upload-box"
+                    style="
+                      border: 2px dashed rgba(56, 189, 248, 0.4);
+                      padding: 16px;
+                      border-radius: 12px;
+                      text-align: center;
+                      background: rgba(56, 189, 248, 0.04);
+                      cursor: pointer;
+                    "
+                    onclick="document.getElementById('teacher-video-file-input').click()"
+                  >
+                    <i class="fas fa-cloud-arrow-up" style="font-size: 1.8rem; color: #38bdf8; margin-bottom: 6px"></i>
+                    <div id="teacher-video-info-text" style="font-size: 0.88rem; color: #cbd5e1">
+                      اضغط لاختيار ملف الفيديو من جهازك (MP4, WebM, MOV)
+                    </div>
+                    <input
+                      type="file"
+                      id="teacher-video-file-input"
+                      accept="video/*"
+                      style="display: none"
+                      onchange="TeacherApp.onVideoSelected(this)"
+                    />
+                  </div>
+                </div>
+
+                <!-- رفع صورة الغلاف من الجهاز -->
+                <div class="course-form-group">
+                  <label>رفع صورة غلاف الكورس من جهازك</label>
+                  <div
+                    style="
+                      border: 2px dashed rgba(255, 255, 255, 0.2);
+                      padding: 16px;
+                      border-radius: 12px;
+                      text-align: center;
+                      background: rgba(255, 255, 255, 0.03);
+                      cursor: pointer;
+                    "
+                    onclick="document.getElementById('teacher-thumb-file-input').click()"
+                  >
+                    <i class="fas fa-image" style="font-size: 1.8rem; color: #a855f7; margin-bottom: 6px"></i>
+                    <div style="font-size: 0.88rem; color: #cbd5e1">اضغط لاختيار صورة الغلاف من جهازك</div>
+                    <input
+                      type="file"
+                      id="teacher-thumb-file-input"
+                      accept="image/*"
+                      style="display: none"
+                      onchange="TeacherApp.onThumbSelected(this)"
+                    />
+                  </div>
+                  <div id="teacher-thumb-preview-box" style="display: none; margin-top: 10px; text-align: center">
+                    <img
+                      id="teacher-thumb-preview-img"
+                      src=""
+                      alt="معاينة الغلاف"
+                      style="max-height: 120px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2)"
+                    />
+                  </div>
+                </div>
+
+                <div class="course-form-group">
+                  <label for="teacher-course-hashtags">الهاشتاجات</label>
+                  <input
+                    type="text"
+                    id="teacher-course-hashtags"
+                    placeholder="مثال: #برمجة #ذكاء_اصطناعي #تقنية"
+                  />
+                </div>
+
+                <div class="course-form-group">
+                  <label>نوع الكورس *</label>
+                  <div class="course-radio-row">
+                    <label class="course-radio-label">
+                      <input
+                        type="radio"
+                        name="teacher_price_type"
+                        id="teacher-course-free-radio"
+                        value="free"
+                        checked
+                        onchange="TeacherApp.handlePriceTypeChange()"
+                      />
+                      <span><i class="fas fa-gift" style="color: #10b981"></i> كورس مجاني</span>
+                    </label>
+                    <label class="course-radio-label">
+                      <input
+                        type="radio"
+                        name="teacher_price_type"
+                        id="teacher-course-paid-radio"
+                        value="paid"
+                        onchange="TeacherApp.handlePriceTypeChange()"
+                      />
+                      <span><i class="fas fa-crown" style="color: #f59e0b"></i> كورس مدفوع</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- تفاصيل الكورس المدفوع -->
+              <div
+                id="teacher-course-price-box"
+                style="display: none; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 14px; padding: 16px; margin-bottom: 18px"
+              >
+                <div class="course-form-grid" style="margin: 0">
+                  <div class="course-form-group">
+                    <label for="teacher-course-price">سعر الكورس *</label>
+                    <input
+                      type="text"
+                      id="teacher-course-price"
+                      placeholder="مثال: 150 ج.م"
+                    />
+                  </div>
+                  <div class="course-form-group">
+                    <label for="teacher-course-phone">رقم الواتساب لتحويل الرسوم وتلقي الاشتراكات *</label>
+                    <input
+                      type="tel"
+                      id="teacher-course-phone"
+                      placeholder="مثال: 201012345678"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="course-form-group" style="margin-bottom: 20px">
+                <label for="teacher-course-desc">وصف الكورس ومحتواه</label>
+                <textarea
+                  id="teacher-course-desc"
+                  rows="4"
+                  placeholder="اكتب نبذة شاملة عن محاور الكورس وما سيتعلمه الطالب من هذا الفيديو..."
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                class="teacher-add-course-btn"
+                style="width: 100%; justify-content: center; padding: 14px; font-size: 1rem"
+              >
+                <i class="fas fa-cloud-arrow-up"></i> رفع ونشر الكورس في المنصة
+              </button>
+            </form>
+          </div>
+
+          <!-- قائمة كورساتي المنشورة ومتابعتها -->
+          <div class="prof-card" style="margin-bottom: 24px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 18px; padding: 20px;">
+            <div class="prof-card-header" style="color: #38bdf8; display: flex; align-items: center; justify-content: space-between;">
+              <span><i class="fas fa-layer-group"></i> كورساتي المنشورة ومتابعتها</span>
+            </div>
+            <div id="teacher-courses-list" class="courses-grid" style="margin-top: 16px"></div>
+          </div>
+
+          <!-- تفعيل الكورسات للمشتركين -->
+          <div class="subscribers-panel-card" style="margin-bottom: 24px;">
+            <div class="prof-card-header" style="color: #fbbf24; margin-bottom: 12px">
+              <span><i class="fas fa-user-check"></i> تفعيل الكورسات للمشتركين</span>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 16px">
+              عندما يتواصل معك طالب عبر الواتساب ويقوم بسداد رسوم الكورس، اختر الكورس واكتب بريده أو حسابه واضغط تفعيل ليتمكن من المشاهدة فوراً.
+            </p>
+
+            <div class="subscribers-activate-row">
+              <select
+                id="teacher-activate-course-select"
+                style="flex: 1; min-width: 220px; padding: 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.15)"
+              ></select>
+              <input
+                type="text"
+                id="teacher-subscriber-input"
+                placeholder="اسم المستخدم أو البريد الإلكتروني للمشترك..."
+                style="flex: 1.5; min-width: 260px; padding: 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.15)"
+              />
+              <button
+                type="button"
+                class="teacher-add-course-btn"
+                style="background: linear-gradient(135deg, #f59e0b, #d97706); white-space: nowrap"
+                onclick="TeacherApp.activateSubscriber()"
+              >
+                <i class="fas fa-check"></i> تفعيل الكورس للمشترك
+              </button>
+            </div>
+
+            <div style="overflow-x: auto; margin-top: 20px">
+              <table class="subscribers-table">
+                <thead>
+                  <tr>
+                    <th>حساب المشترك</th>
+                    <th>الكورس المفعل</th>
+                    <th>تاريخ ووقت التفعيل</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="teacher-subscribers-list">
+                  <!-- Injected by TeacherApp -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =========================================
+       القسم الثاني: صفحة الفرص
+  ========================================= -->
+      <div id="opportunities-view" style="display: none; padding-top: 40px; padding-bottom: 80px">
+        <div class="container">
+          <div class="opp-header-stats">
+            <div style="display: flex; align-items: center; gap: 15px">
+              <button
+                onclick="window.location.href = 'index.html'"
+                class="btn-back-home"
+                title="الرئيسية"
+              >
+                <i class="fas fa-arrow-right"></i>
+              </button>
+              <div class="title" id="page-title">أحدث الفرص</div>
+            </div>
+            <div class="count">
+              <span id="page-count-text">فرصة متاحة</span>
+              <span class="num">0</span>
+            </div>
+          </div>
+
+          <div class="opp-filter-bar" style="margin-bottom: 30px; display: flex; gap: 15px">
+            <div style="position: relative; flex: 1">
+              <i
+                class="fas fa-search"
+                style="
+                  position: absolute;
+                  right: 15px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  color: var(--text-muted);
+                "
+              ></i>
+              <input
+                type="text"
+                id="fast-search"
+                placeholder="ابحث في هذه الفرص..."
+                style="
+                  width: 100%;
+                  padding: 14px 40px 14px 15px;
+                  border-radius: 12px;
+                  border: 1px solid var(--border-color);
+                  background: var(--bg-card);
+                  color: var(--text-primary);
+                  outline: none;
+                  font-family: inherit;
+                "
+                onkeyup="debouncedFilterOpportunities(this.value)"
+              />
+            </div>
+          </div>
+
+          <div
+            id="no-opps-msg"
+            style="
+              display: none;
+              text-align: center;
+              padding: 60px 20px;
+              color: var(--text-muted);
+              font-size: 1.1rem;
+              font-weight: 700;
+              background: var(--bg-card);
+              border: 1px solid var(--border-color);
+              border-radius: 20px;
+              box-shadow: var(--shadow-sm);
+            "
+          >
+            <i
+              class="fas fa-folder-open"
+              style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5"
+            ></i
+            ><br />
+            عذراً، لا توجد فرص متاحة في هذا القسم حالياً. عُد لاحقاً!
+          </div>
+
+          <div class="opp-cards-grid" id="opp-cards-container">
+            <!-- سيتم الجلب برمجياً -->
+          </div>
+        </div>
+      </div>
+
+      
+
+      <!-- =========================================
+       القسم الثالث: صفحة التفاصيل
+  ========================================= -->
+      <div id="detail-view" style="display: none">
+        <div class="detail-bg-orb orb-1"></div>
+        <div class="detail-bg-orb orb-2"></div>
+
+        <div class="detail-container">
+          <div class="top-bar">
+            <a href="javascript:history.back()" class="back-link">
+              <i class="fas fa-arrow-right"></i>
+              العودة للفرص
+            </a>
+          </div>
+
+          <div class="hero-section glass-panel">
+            <img
+              src="images/logo.png"
+              loading="lazy"
+              alt="Elevate Logo"
+              class="detail-logo"
+              id="detail-logo"
+            />
+            <h1 class="hero-title" id="detail-title">جاري التحميل...</h1>
+            <p class="hero-subtitle" id="detail-company">
+              جاري التحميل <i class="far fa-building"></i>
+            </p>
+            <div class="badge" id="detail-badge"><i class="fas fa-trophy"></i> مسابقة</div>
+          </div>
+
+          <div class="layout-grid">
+            <div class="content-area">
+              <div class="glass-panel" style="padding: 25px; height: 100%; min-height: 350px">
+                <div class="detail-section-header">
+                  <i class="fas fa-bars-staggered"></i>
+                  <h3>الوصف</h3>
+                </div>
+                <p class="description-text" id="detail-description">جاري تحميل الوصف...</p>
+
+                <div class="detail-section-header" style="margin-top: 40px">
+                  <i class="fas fa-comments"></i>
+                  <h3>التفاعل والتعليقات</h3>
+                </div>
+                <div class="interaction-section">
+                  <button
+                    id="like-btn"
+                    class="btn-secondary-detail"
+                    style="width: auto; display: inline-flex"
+                    onclick="App.toggleLike(this)"
+                  >
+                    <i class="far fa-heart"></i> إعجاب (<span id="like-count">0</span>)
+                  </button>
+
+                  <div
+                    class="comment-input-area"
+                    style="margin-top: 20px; display: flex; gap: 10px"
+                  >
+                    <input
+                      type="text"
+                      id="comment-input"
+                      placeholder="أضف تعليقاً يشارك تجربتك أو استفسارك..."
+                      style="
+                        flex: 1;
+                        padding: 12px 15px;
+                        border-radius: 12px;
+                        border: 1px solid var(--border-glass);
+                        background: rgba(0, 0, 0, 0.2);
+                        color: white;
+                        outline: none;
+                      "
+                    />
+                    <button
+                      class="btn-primary-detail"
+                      style="width: auto; padding: 10px 25px; margin-bottom: 0"
+                      onclick="App.addComment()"
+                    >
+                      إرسال
+                    </button>
+                  </div>
+
+                  <div
+                    id="comments-list"
+                    style="margin-top: 25px; display: flex; flex-direction: column; gap: 15px"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sidebar">
+              <div class="sidebar-card glass-panel">
+                <button class="btn-secondary-detail" style="width: 100%" id="detail-save-btn">
+                  حفظ في المفضلة <i class="far fa-bookmark"></i>
+                </button>
+              </div>
+
+              <div class="sidebar-card glass-panel" style="margin-top: 20px">
+                <button
+                  class="btn-primary-detail"
+                  style="
+                    background: rgba(255, 255, 255, 0.04);
+                    color: #fff;
+                    border: 1px solid var(--border-glass);
+                  "
+                  onclick="
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('تم نسخ رابط الفرصة بنجاح!');
+                  "
+                >
+                  <i class="fas fa-share-nodes"></i> مشاركة الفرصة
+                </button>
+              </div>
+
+              <div class="sidebar-card glass-panel" style="margin-top: 20px">
+                <div class="info-row">
+                  <div class="info-content">
+                    <div class="text-group">
+                      <span class="info-label">بداية المدة</span>
+                      <span class="info-value" id="detail-startdate" style="color: #6ee7b7"
+                        >غير محدد</span
+                      >
+                    </div>
+                    <div class="info-icon"><i class="far fa-calendar-plus"></i></div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-track">
+                      <div class="progress-fill start-fill" id="startdate-bar"></div>
+                    </div>
+                    <div class="progress-stats">
+                      <span id="start-time-text">يتم الحساب...</span>
+                      <span>بداية التقديم</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <div class="info-content">
+                    <div class="text-group">
+                      <span class="info-label">آخر موعد للتقديم</span>
+                      <span
+                        class="info-value"
+                        id="detail-deadline"
+                        style="color: var(--gold); text-shadow: var(--gold-glow)"
+                        >غير محدد</span
+                      >
+                    </div>
+                    <div class="info-icon"><i class="far fa-calendar-alt"></i></div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-track">
+                      <div class="progress-fill" id="countdown-bar"></div>
+                    </div>
+                    <div class="progress-stats">
+                      <span id="time-left-text">يتم الحساب...</span>
+                      <span>متبقي</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <!-- =========================================
+       القسم الرابع: الملف الشخصي (Profile & Admin Dashboard)
+  ========================================= -->
+      <div id="profile-view" style="display: none; padding-top: 40px; padding-bottom: 80px">
+        <div class="prof-layout-wrapper">
+          <header class="prof-header" id="prof-header">
+            <div class="prof-header-right">
+              <div class="prof-avatar" id="prof-avatar-char">O</div>
+              <div class="prof-user-info">
+                <div class="prof-name-badge">
+                  <h1 id="prof-name-disp">المستخدم</h1>
+                  <span class="prof-badge" id="prof-role-badge"
+                    ><i class="fa-solid fa-check-circle"></i> عضو</span
+                  >
+                </div>
+                <div class="prof-handle" id="prof-handle-disp">@user</div>
+                <div class="prof-meta-info" id="prof-normal-meta">
+                  <span
+                    ><i class="fa-solid fa-phone"></i>
+                    <span id="prof-phone-disp">غير مسجل</span></span
+                  >
+                  <span
+                    ><i class="fa-solid fa-calendar-alt"></i>
+                    <span id="prof-date-disp">انضم مؤخراً</span></span
+                  >
+                </div>
+                <!-- شريط بيانات المدير التنفيذية -->
+                <div class="admin-executive-meta" id="prof-admin-meta" style="display: none">
+                  <span class="admin-meta-pill pill-gold"
+                    ><i class="fas fa-crown"></i> صلاحيات كاملة (Super Admin)</span
+                  >
+                  <span class="admin-meta-pill pill-green"
+                    ><i class="fas fa-shield-halved"></i> النظام نشط ومباشر</span
+                  >
+                  <span class="admin-meta-pill pill-blue"
+                    ><i class="fas fa-database"></i> قاعدة البيانات متزامنة</span
+                  >
+                  <span class="admin-meta-pill"
+                    ><i class="far fa-clock"></i>
+                    <span id="admin-current-time">جلسة نشطة</span></span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="prof-header-left">
+              <!-- أزرار المستخدم العادي -->
+              <button
+                class="prof-btn prof-btn-white"
+                id="prof-save-header-btn"
+                onclick="App.switchProfTab('prof-saved-tab')"
+              >
+                <i class="fa-solid fa-bookmark"></i> المحفوظات
+              </button>
+              <button class="prof-btn prof-btn-outline" id="prof-logout-btn" onclick="App.logout()">
+                خروج <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </button>
+
+              <!-- شريط أزرار المدير التنفيذية السريعة -->
+              <div
+                class="admin-header-actions"
+                id="prof-admin-header-actions"
+                style="display: none"
+              >
+                <a href="index.html" class="admin-btn-hero"
+                  ><i class="fas fa-globe"></i> الموقع كزائر</a
+                >
+                <button
+                  type="button"
+                  class="admin-btn-hero"
+                  style="
+                    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+                    color: #fff;
+                    font-weight: 800;
+                    border: 1px solid rgba(59, 130, 246, 0.5);
+                    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+                  "
+                  onclick="Admin.switchSection('adm-sec-teachers')"
+                >
+                  <i class="fas fa-chalkboard-teacher"></i> حسابات المدرسين
+                </button>
+                <button
+                  type="button"
+                  class="admin-btn-hero btn-gold"
+                  onclick="Admin.openModal('competitions', 'مسابقة', 'fas fa-trophy')"
+                >
+                  <i class="fas fa-plus-circle"></i> إضافة فرصة
+                </button>
+                <button
+                  type="button"
+                  class="admin-btn-hero"
+                  onclick="Admin.openNotificationModal()"
+                >
+                  <i class="fas fa-bullhorn"></i> إشعار عام
+                </button>
+                <button type="button" class="admin-btn-hero btn-danger" onclick="App.logout()">
+                  خروج <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          <!-- Stats for Normal User -->
+          <div class="prof-stats-bar" id="prof-normal-stats">
+            <div class="prof-stat-item">
+              <div class="prof-stat-value" id="prof-saved-count">0</div>
+              <div class="prof-stat-label">محفوظة</div>
+            </div>
+            <div class="prof-stat-item">
+              <div class="prof-stat-value" id="prof-comments-count">0</div>
+              <div class="prof-stat-label">تعليقاتي</div>
+            </div>
+            <div class="prof-stat-item">
+              <div class="prof-stat-value" id="prof-active-days">1</div>
+              <div class="prof-stat-label">أيام نشاط</div>
+            </div>
+            <div class="prof-stat-item">
+              <div
+                class="prof-stat-value"
+                style="font-size: 20px; line-height: 34px"
+                id="prof-member-id"
+              >
+                -
+              </div>
+              <div class="prof-stat-label">رقم العضو</div>
+            </div>
+          </div>
+
+          <div class="prof-container" id="prof-main-container">
+            <aside class="prof-sidebar" id="prof-normal-sidebar">
+              <div class="prof-card">
+                <div class="prof-card-header">
+                  <span>إجراءات سريعة</span>
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div class="prof-quick-actions">
+                  <div class="prof-action-btn" onclick="window.location.href = 'index.html'">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>استكشف</span>
+                  </div>
+                  <div class="prof-action-btn" onclick="App.switchProfTab('prof-saved-tab')">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <span>محفوظ</span>
+                  </div>
+                  <div
+                    class="prof-action-btn"
+                    onclick="window.location.href = '?category=competitions'"
+                  >
+                    <i class="fa-solid fa-trophy"></i>
+                    <span>تنافس</span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <main class="prof-main-content" style="width: 100%">
+              <div class="prof-tabs" id="prof-tabs-container">
+                <div
+                  class="prof-tab active"
+                  data-target="prof-overview-tab"
+                  onclick="App.switchProfTab('prof-overview-tab')"
+                  id="tab-overview-btn"
+                >
+                  نظرة عامة
+                </div>
+                <div
+                  class="prof-tab"
+                  data-target="prof-saved-tab"
+                  onclick="App.switchProfTab('prof-saved-tab')"
+                  id="tab-saved-btn"
+                >
+                  الفرص المحفوظة
+                </div>
+                <!-- تبويب الإدارة يظهر للأدمن فقط -->
+                <div
+                  class="prof-tab admin-only-tab"
+                  data-target="prof-admin-tab"
+                  onclick="App.switchProfTab('prof-admin-tab')"
+                  id="tab-admin-btn"
+                  style="
+                    display: none;
+                    color: #fbbf24;
+                    border-color: #fbbf24;
+                    background: rgba(245, 158, 11, 0.1);
+                    font-weight: 900;
+                  "
+                >
+                  لوحة الإدارة المركزية (VIP) <i class="fas fa-crown"></i>
+                </div>
+                <!-- تبويب لوحة الشريك -->
+                <div
+                  class="prof-tab"
+                  data-target="prof-partner-tab"
+                  onclick="App.switchProfTab('prof-partner-tab')"
+                  id="tab-partner-btn"
+                  style="
+                    display: none;
+                    color: #6366f1;
+                    border-color: #6366f1;
+                    background: rgba(99, 102, 241, 0.1);
+                    font-weight: 900;
+                  "
+                >
+                  لوحة الشريك <i class="fas fa-handshake"></i>
+                </div>
+              </div>
+
+              <!-- Normal User Info -->
+              <div id="prof-overview-tab" class="prof-tab-content active">
+                <div class="prof-card">
+                  <div class="prof-card-header">
+                    <span>معلومات الحساب</span>
+                    <i class="fa-solid fa-circle-info"></i>
+                  </div>
+                  <div class="prof-info-list">
+                    <div class="prof-info-item">
+                      <div class="prof-info-details">
+                        <span class="prof-info-label">الاسم الكامل</span>
+                        <span class="prof-info-value" id="prof-info-name">-</span>
+                      </div>
+                      <div class="prof-info-icon"><i class="fa-solid fa-user"></i></div>
+                    </div>
+                    <div class="prof-info-item">
+                      <div class="prof-info-details">
+                        <span class="prof-info-label">اسم المستخدم</span>
+                        <span class="prof-info-value" id="prof-info-handle">-</span>
+                      </div>
+                      <div class="prof-info-icon"><i class="fa-solid fa-at"></i></div>
+                    </div>
+                    <div class="prof-info-item">
+                      <div class="prof-info-details">
+                        <span class="prof-info-label">الهاتف</span>
+                        <span class="prof-info-value" dir="ltr" id="prof-info-phone">-</span>
+                      </div>
+                      <div class="prof-info-icon"><i class="fa-solid fa-phone"></i></div>
+                    </div>
+                    <div class="prof-info-item">
+                      <div class="prof-info-details">
+                        <span class="prof-info-label">الدور</span>
+                        <span class="prof-info-value" id="prof-info-role">مستخدم</span>
+                      </div>
+                      <div class="prof-info-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="prof-saved-tab" class="prof-tab-content">
+                <div class="prof-saved-grid" id="saved-grid-container"></div>
+              </div>
+
+              <!-- ================= PARTNER DASHBOARD TAB ================= -->
+              <div id="prof-partner-tab" class="prof-tab-content">
+                <div class="admin-stats-row">
+                  <div class="admin-stat-box">
+                    <div
+                      class="admin-stat-icon"
+                      style="background: rgba(99, 102, 241, 0.15); color: #8b5cf6"
+                    >
+                      <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="admin-stat-info">
+                      <h3 id="partner-opps-count">0</h3>
+                      <p>فرصي المنشورة</p>
+                    </div>
+                  </div>
+                  <div class="admin-stat-box">
+                    <div
+                      class="admin-stat-icon"
+                      style="background: rgba(239, 68, 68, 0.15); color: #ef4444"
+                    >
+                      <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="admin-stat-info">
+                      <h3 id="partner-likes-count">0</h3>
+                      <p>إجمالي الإعجابات</p>
+                    </div>
+                  </div>
+                  <div class="admin-stat-box">
+                    <div
+                      class="admin-stat-icon"
+                      style="background: rgba(16, 185, 129, 0.15); color: #10b981"
+                    >
+                      <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="admin-stat-info">
+                      <h3 id="partner-comments-count">0</h3>
+                      <p>إجمالي التعليقات</p>
+                    </div>
+                  </div>
+                  <div class="admin-stat-box">
+                    <div
+                      class="admin-stat-icon"
+                      style="background: rgba(245, 158, 11, 0.15); color: #f59e0b"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="admin-stat-info">
+                      <h3 id="partner-views-count">0</h3>
+                      <p>إجمالي المشاهدات</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="prof-card" style="margin-top: 20px">
+                  <div class="prof-card-header" style="color: var(--accent-primary)">
+                    <span>إضافة فرصة جديدة</span><i class="fas fa-plus-circle"></i>
+                  </div>
+                  <div style="display: flex; gap: 10px; flex-wrap: wrap">
+                    <select
+                      id="partner-new-cat"
+                      style="
+                        flex: 1;
+                        min-width: 200px;
+                        padding: 12px;
+                        border-radius: 12px;
+                        background: rgba(255, 255, 255, 0.05);
+                        color: #e2e8f0;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                      "
+                    >
+                      <option value="competitions">مسابقات</option>
+                      <option value="scholarships">منح دراسية</option>
+                      <option value="volunteering">تطوع</option>
+                      <option value="jobs">وظائف</option>
+                      <option value="events">فعاليات</option>
+                      <option value="courses">كورسات مجانية</option>
+                      <option value="workshops">ورش عمل</option>
+                      <option value="travel">فرص سفر ممولة</option>
+                      <option value="admission">قبول جامعي</option>
+                    </select>
+                    <button class="admin-cat-btn" onclick="Partner.addOpp()">
+                      <i class="fas fa-plus"></i> إضافة فرصة
+                    </button>
+                  </div>
+                </div>
+
+                <div class="prof-card" style="margin-top: 20px">
+                  <div class="prof-card-header" style="color: #10b981">
+                    <span>حسابات التواصل الاجتماعي</span><i class="fas fa-share-nodes"></i>
+                  </div>
+                  <div style="display: flex; gap: 10px; flex-wrap: wrap">
+                    <select
+                      id="partner-social-platform"
+                      style="
+                        min-width: 160px;
+                        padding: 12px;
+                        border-radius: 12px;
+                        background: rgba(255, 255, 255, 0.05);
+                        color: #e2e8f0;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                      "
+                    >
+                      <option value="facebook">فيسبوك</option>
+                      <option value="instagram">إنستجرام</option>
+                      <option value="x">إكس (تويتر)</option>
+                      <option value="linkedin">لينكد إن</option>
+                      <option value="youtube">يوتيوب</option>
+                      <option value="tiktok">تيك توك</option>
+                      <option value="telegram">تيليجرام</option>
+                      <option value="whatsapp">واتساب</option>
+                      <option value="snapchat">سناب شات</option>
+                      <option value="discord">ديسكورد</option>
+                      <option value="website">موقع إلكتروني</option>
+                      <option value="email">بريد إلكتروني</option>
+                      <option value="phone">رقم هاتف</option>
+                    </select>
+                    <input
+                      type="text"
+                      id="partner-social-url"
+                      placeholder="https://... أو البريد / الرقم"
+                      style="
+                        flex: 1;
+                        min-width: 220px;
+                        padding: 12px;
+                        border-radius: 12px;
+                        background: rgba(255, 255, 255, 0.05);
+                        color: #e2e8f0;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                      "
+                    />
+                    <button class="admin-cat-btn" onclick="Partner.addSocial()">
+                      <i class="fas fa-plus"></i> إضافة حساب
+                    </button>
+                  </div>
+                  <div
+                    id="partner-socials-list"
+                    style="margin-top: 14px; display: flex; flex-direction: column; gap: 10px"
+                  ></div>
+                </div>
+
+                <div class="prof-card" style="margin-top: 20px">
+                  <div class="prof-card-header">
+                    <span>فرصي والتفاعل عليها</span><i class="fas fa-chart-line"></i>
+                  </div>
+                  <div id="partner-opps-list"></div>
+                </div>
+              </div>
+
+              <!-- ================= ADMIN DASHBOARD TAB ================= -->
+              <div id="prof-admin-tab" class="prof-tab-content">
+                <!-- Dashboard Main Navigation Tabs (شريط التنقل الرئيسي للوحة التحكم) -->
+                <div class="admin-nav admin-nav-pro" id="admin-nav">
+                  <button
+                    class="admin-nav-btn active"
+                    data-sec="adm-sec-overview"
+                    onclick="Admin.switchSection('adm-sec-overview')"
+                  >
+                    <i class="fas fa-chart-pie"></i> <span>لوحة القيادة</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-opps"
+                    onclick="Admin.switchSection('adm-sec-opps')"
+                  >
+                    <i class="fas fa-layer-group"></i> <span>إدارة الفرص</span>
+                    <span class="admin-nav-badge" id="admin-nav-opps-badge">0</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-add-opp"
+                    onclick="Admin.switchSection('adm-sec-add-opp')"
+                  >
+                    <i class="fas fa-plus-circle"></i> <span>نشر فرصة</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-dates"
+                    onclick="Admin.switchSection('adm-sec-dates')"
+                  >
+                    <i class="fas fa-calendar-days"></i> <span>جدول المواعيد</span>
+                    <span class="admin-nav-badge" id="admin-nav-dates-badge">0</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-partners"
+                    onclick="Admin.switchSection('adm-sec-partners')"
+                  >
+                    <i class="fas fa-handshake"></i> <span>الشركاء</span>
+                    <span class="admin-nav-badge" id="admin-nav-partners-badge">0</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-members"
+                    onclick="Admin.switchSection('adm-sec-members')"
+                  >
+                    <i class="fas fa-users"></i> <span>الأعضاء</span>
+                    <span class="admin-nav-badge" id="admin-nav-members-badge">0</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-engage"
+                    onclick="Admin.switchSection('adm-sec-engage')"
+                  >
+                    <i class="fas fa-bullhorn"></i> <span>التفاعل والإشعارات</span>
+                    <span class="admin-nav-badge" id="admin-nav-engage-badge">0</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-team"
+                    onclick="Admin.switchSection('adm-sec-team')"
+                  >
+                    <i class="fas fa-user-shield"></i> <span>فريق العمل</span>
+                    <span class="admin-nav-badge" id="admin-nav-team-badge">0</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-faq"
+                    onclick="Admin.switchSection('adm-sec-faq')"
+                  >
+                    <i class="fas fa-circle-question"></i> <span>الأسئلة الشائعة</span>
+                    <span class="admin-nav-badge" id="admin-nav-faq-badge">0</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-shorts"
+                    onclick="Admin.switchSection('adm-sec-shorts')"
+                    style="
+                      background: rgba(244, 63, 94, 0.12);
+                      border-color: rgba(244, 63, 94, 0.35);
+                      color: #f43f5e;
+                    "
+                  >
+                    <i class="fas fa-play-circle"></i> <span>إدارة الشورتس (Shorts)</span>
+                    <span class="admin-nav-badge" id="admin-nav-shorts-badge">0</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-contests"
+                    onclick="Admin.switchSection('adm-sec-contests')"
+                    style="
+                      background: rgba(245, 158, 11, 0.12);
+                      border-color: rgba(245, 158, 11, 0.35);
+                      color: #f59e0b;
+                    "
+                  >
+                    <i class="fas fa-trophy"></i> <span>مسابقات المنصة (Live)</span>
+                    <span class="admin-nav-badge" id="admin-nav-contests-badge">0</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-visibility"
+                    onclick="Admin.switchSection('adm-sec-visibility')"
+                    style="
+                      background: rgba(16, 185, 129, 0.15);
+                      border-color: rgba(16, 185, 129, 0.4);
+                      color: #34d399;
+                    "
+                  >
+                    <i class="fas fa-sliders"></i> <span>ظهور الأقسام والصفحات</span>
+                  </button>
+                  <button
+                    class="admin-nav-btn admin-nav-vault-btn"
+                    data-sec="adm-sec-vault"
+                    onclick="Admin.switchSection('adm-sec-vault')"
+                    style="
+                      background: rgba(239, 68, 68, 0.12);
+                      border-color: rgba(239, 68, 68, 0.35);
+                      color: #f87171;
+                    "
+                  >
+                    <i class="fas fa-user-secret"></i> <span>خزينة المجتمع والدردشات</span>
+                    <i class="fas fa-lock" style="font-size: 0.75rem; margin-right: 4px"></i>
+                  </button>
+                  <button
+                    class="admin-nav-btn"
+                    data-sec="adm-sec-teachers"
+                    onclick="Admin.switchSection('adm-sec-teachers')"
+                    style="
+                      background: rgba(59, 130, 246, 0.12);
+                      border-color: rgba(59, 130, 246, 0.35);
+                      color: #60a5fa;
+                    "
+                  >
+                    <i class="fas fa-chalkboard-teacher"></i> <span>إنشاء حسابات مدرسين</span>
+                    <span class="admin-nav-badge" id="admin-nav-teachers-badge">0</span>
+                  </button>
+                </div>
+
+                <!-- ==========================================
+                         الصفحة 1: لوحة القيادة والمؤشرات (Overview)
+                    ========================================== -->
+                <section class="admin-section active" id="adm-sec-overview">
+                  <!-- Welcome & System Health Card -->
+                  <div class="admin-overview-hero">
+                    <div>
+                      <h3
+                        style="
+                          margin: 0 0 6px 0;
+                          font-size: 1.25rem;
+                          font-weight: 900;
+                          color: var(--text-primary);
+                        "
+                      >
+                        <i
+                          class="fas fa-shield-halved"
+                          style="color: var(--adm-gold); margin-left: 8px"
+                        ></i>
+                        لوحة التحكم والقيادة المركزية
+                      </h3>
+                      <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted)">
+                        مرحباً بك! هذه نظرة عامة شاملة وفورية على جميع إحصائيات ونشاطات منصة
+                        Elevate.
+                      </p>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center">
+                      <span class="admin-meta-pill pill-green"
+                        ><i class="fas fa-circle-check"></i> النظام يعمل بكفاءة 100%</span
+                      >
+                      <button
+                        type="button"
+                        class="admin-btn-hero btn-gold"
+                        onclick="Admin.switchSection('adm-sec-add-opp')"
+                      >
+                        <i class="fas fa-plus"></i> نشر فرصة جديدة
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- 6 Key Performance Indicators (3x2 Balanced Grid) -->
+                  <div class="admin-kpi-grid" id="admin-kpi-grid">
+                    <!-- Stat 1: Opportunities -->
+                    <div class="admin-kpi-card" style="--card-accent: #6366f1">
+                      <div class="admin-kpi-top">
+                        <div
+                          class="admin-kpi-icon"
+                          style="background: linear-gradient(135deg, #6366f1, #8b5cf6)"
+                        >
+                          <i class="fas fa-layer-group"></i>
+                        </div>
+                        <span class="admin-kpi-tag">الفرص النشطة</span>
+                      </div>
+                      <div class="admin-kpi-value" id="admin-opps-count">0</div>
+                      <h4 class="admin-kpi-title">إجمالي الفرص في المنصة</h4>
+                      <div class="admin-kpi-sub">
+                        <i class="fas fa-chart-line" style="color: #6366f1"></i>
+                        <span id="admin-opps-sub">متاحة للتقديم والتصفح</span>
+                      </div>
+                    </div>
+
+                    <!-- Stat 2: Registered Users -->
+                    <div class="admin-kpi-card" style="--card-accent: #10b981">
+                      <div class="admin-kpi-top">
+                        <div
+                          class="admin-kpi-icon"
+                          style="background: linear-gradient(135deg, #10b981, #059669)"
+                        >
+                          <i class="fas fa-users"></i>
+                        </div>
+                        <span class="admin-kpi-tag">المجتمع</span>
+                      </div>
+                      <div class="admin-kpi-value" id="admin-users-count">0</div>
+                      <h4 class="admin-kpi-title">الأعضاء المسجلين</h4>
+                      <div class="admin-kpi-sub">
+                        <i class="fas fa-circle-check" style="color: #10b981"></i>
+                        <span id="admin-users-sub">حسابات نشطة وموثقة</span>
+                      </div>
+                    </div>
+
+                    <!-- Stat 3: Partners -->
+                    <div class="admin-kpi-card" style="--card-accent: #f59e0b">
+                      <div class="admin-kpi-top">
+                        <div
+                          class="admin-kpi-icon"
+                          style="background: linear-gradient(135deg, #f59e0b, #d97706)"
+                        >
+                          <i class="fas fa-handshake"></i>
+                        </div>
+                        <span class="admin-kpi-tag">الشركاء</span>
+                      </div>
+                      <div class="admin-kpi-value" id="admin-partners-count">0</div>
+                      <h4 class="admin-kpi-title">شركاء النجاح المعتمدين</h4>
+                      <div class="admin-kpi-sub">
+                        <i class="fas fa-certificate" style="color: #f59e0b"></i>
+                        <span id="admin-partners-sub">شركاء موثوقين ومفعلين</span>
+                      </div>
+                    </div>
+
+                    <!-- Stat 4: Interactions (Comments & Likes) -->
+                    <div class="admin-kpi-card" style="--card-accent: #ec4899">
+                      <div class="admin-kpi-top">
+                        <div
+                          class="admin-kpi-icon"
+                          style="background: linear-gradient(135deg, #ec4899, #be185d)"
+                        >
+                          <i class="fas fa-comments"></i>
+                        </div>
+                        <span class="admin-kpi-tag">التفاعل</span>
+                      </div>
+                      <div class="admin-kpi-value" id="admin-interactions-count">0</div>
+                      <h4 class="admin-kpi-title">التعليقات والإعجابات</h4>
+                      <div class="admin-kpi-sub">
+                        <i class="fas fa-heart" style="color: #ec4899"></i>
+                        <span id="admin-interactions-sub">تفاعل حي من الأعضاء</span>
+                      </div>
+                    </div>
+
+                    <!-- Stat 5: Dated Opportunities (Deadlines) -->
+                    <div class="admin-kpi-card" style="--card-accent: #0ea5e9">
+                      <div class="admin-kpi-top">
+                        <div
+                          class="admin-kpi-icon"
+                          style="background: linear-gradient(135deg, #0ea5e9, #0284c7)"
+                        >
+                          <i class="fas fa-calendar-days"></i>
+                        </div>
+                        <span class="admin-kpi-tag">المواعيد</span>
+                      </div>
+                      <div class="admin-kpi-value" id="admin-dated-count">0</div>
+                      <h4 class="admin-kpi-title">فرص بمواعيد محددة</h4>
+                      <div class="admin-kpi-sub">
+                        <i class="fas fa-hourglass-half" style="color: #0ea5e9"></i>
+                        <span id="admin-dated-sub">متابعة دقيقة للمواعيد</span>
+                      </div>
+                    </div>
+
+                    <!-- Stat 6: Team & Staff Accounts -->
+                    <div class="admin-kpi-card" style="--card-accent: #8b5cf6">
+                      <div class="admin-kpi-top">
+                        <div
+                          class="admin-kpi-icon"
+                          style="background: linear-gradient(135deg, #8b5cf6, #6d28d9)"
+                        >
+                          <i class="fas fa-user-shield"></i>
+                        </div>
+                        <span class="admin-kpi-tag">الإشراف</span>
+                      </div>
+                      <div class="admin-kpi-value" id="admin-team-count">0</div>
+                      <h4 class="admin-kpi-title">فريق العمل والإدارة</h4>
+                      <div class="admin-kpi-sub">
+                        <i class="fas fa-key" style="color: #8b5cf6"></i>
+                        <span id="admin-team-sub">صلاحيات إشرافية محددة</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Quick Shortcuts Launchpad -->
+                  <div class="admin-deck-full">
+                    <div class="prof-card-header" style="margin-bottom: 16px">
+                      <span style="font-size: 1.05rem; font-weight: 800; color: var(--text-primary)"
+                        ><i
+                          class="fas fa-bolt"
+                          style="color: var(--adm-gold); margin-left: 8px"
+                        ></i>
+                        وصول سريع لأقسام لوحة التحكم</span
+                      >
+                    </div>
+                    <div class="admin-launchpad-grid">
+                      <div
+                        class="admin-shortcut-card"
+                        onclick="Admin.switchSection('adm-sec-opps')"
+                      >
+                        <div
+                          class="admin-shortcut-icon"
+                          style="background: rgba(99, 102, 241, 0.12); color: #6366f1"
+                        >
+                          <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="admin-shortcut-info">
+                          <h4>إدارة الفرص</h4>
+                          <p>بحث، تعديل، وحذف الفرص المضافة</p>
+                        </div>
+                      </div>
+
+                      <div
+                        class="admin-shortcut-card"
+                        onclick="Admin.switchSection('adm-sec-add-opp')"
+                      >
+                        <div
+                          class="admin-shortcut-icon"
+                          style="background: rgba(245, 158, 11, 0.12); color: #f59e0b"
+                        >
+                          <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <div class="admin-shortcut-info">
+                          <h4>نشر فرصة جديدة</h4>
+                          <p>إضافة مسابقة، منحة، وظيفة أو فعالية</p>
+                        </div>
+                      </div>
+
+                      <div
+                        class="admin-shortcut-card"
+                        onclick="Admin.switchSection('adm-sec-dates')"
+                      >
+                        <div
+                          class="admin-shortcut-icon"
+                          style="background: rgba(14, 165, 233, 0.12); color: #0ea5e9"
+                        >
+                          <i class="fas fa-calendar-days"></i>
+                        </div>
+                        <div class="admin-shortcut-info">
+                          <h4>جدول المواعيد</h4>
+                          <p>متابعة الفرص المقتربة من الانتهاء</p>
+                        </div>
+                      </div>
+
+                      <div
+                        class="admin-shortcut-card"
+                        onclick="Admin.switchSection('adm-sec-members')"
+                      >
+                        <div
+                          class="admin-shortcut-icon"
+                          style="background: rgba(16, 185, 129, 0.12); color: #10b981"
+                        >
+                          <i class="fas fa-users"></i>
+                        </div>
+                        <div class="admin-shortcut-info">
+                          <h4>دليل الأعضاء</h4>
+                          <p>البحث وإدارة حسابات المستخدمين</p>
+                        </div>
+                      </div>
+
+                      <div
+                        class="admin-shortcut-card"
+                        onclick="Admin.switchSection('adm-sec-partners')"
+                      >
+                        <div
+                          class="admin-shortcut-icon"
+                          style="background: rgba(245, 158, 11, 0.12); color: #f59e0b"
+                        >
+                          <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="admin-shortcut-info">
+                          <h4>شركاء النجاح</h4>
+                          <p>إدارة الشركاء وحساباتهم</p>
+                        </div>
+                      </div>
+
+                      <div
+                        class="admin-shortcut-card"
+                        onclick="Admin.switchSection('adm-sec-engage')"
+                      >
+                        <div
+                          class="admin-shortcut-icon"
+                          style="background: rgba(236, 72, 153, 0.12); color: #ec4899"
+                        >
+                          <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div class="admin-shortcut-info">
+                          <h4>التفاعل والإشعارات</h4>
+                          <p>إرسال تنبيهات عامة ومراجعة الردود</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+
+
+                <!-- ==========================================
+                         الصفحة 2: إدارة الفرص المضافة (Manage Opps)
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-opps">
+                  <div class="admin-deck-full">
+                    <div class="prof-card-header" style="margin-bottom: 18px">
+                      <div style="display: flex; align-items: center; gap: 12px">
+                        <span
+                          style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary)"
+                          ><i
+                            class="fas fa-layer-group"
+                            style="color: var(--accent-primary); margin-left: 8px"
+                          ></i>
+                          إدارة الفرص المضافة</span
+                        >
+                        <span
+                          class="admin-chip-pro admin-chip-active"
+                          id="admin-filtered-opps-badge"
+                          >0 فرصة</span
+                        >
+                      </div>
+                      <button
+                        type="button"
+                        class="admin-btn-hero btn-gold"
+                        onclick="Admin.switchSection('adm-sec-add-opp')"
+                      >
+                        <i class="fas fa-plus"></i> إضافة فرصة جديدة
+                      </button>
+                    </div>
+
+                    <!-- Toolbar -->
+                    <div class="admin-toolbar-row">
+                      <div class="admin-search-wrap">
+                        <i class="fas fa-magnifying-glass"></i>
+                        <input
+                          type="text"
+                          id="admin-opps-search"
+                          class="admin-search-input-pro"
+                          placeholder="بحث فوري باسم الفرصة أو المؤسسة أو الكلمات المفتاحية..."
+                          oninput="Admin.renderManageList()"
+                        />
+                      </div>
+
+                      <div class="admin-filters-bar">
+                        <select
+                          id="admin-filter-select"
+                          onchange="Admin.renderManageList()"
+                          class="admin-select-pro"
+                        >
+                          <option value="all">عرض جميع الأقسام (الكل)</option>
+                          <option value="competitions">مسابقات</option>
+                          <option value="scholarships">منح دراسية</option>
+                          <option value="volunteering">تطوع</option>
+                          <option value="jobs">وظائف وتدريب</option>
+                          <option value="events">فعاليات</option>
+                          <option value="courses">كورسات مجانية</option>
+                          <option value="workshops">ورش عمل</option>
+                          <option value="travel">فرص سفر ممولة</option>
+                          <option value="admission">قبول جامعي</option>
+                          <option value="live">ورش مباشر</option>
+                          <option value="videos">فيديوهات</option>
+                        </select>
+
+                        <button
+                          type="button"
+                          class="admin-filter-chip active"
+                          data-status-filter="all"
+                          onclick="Admin.setStatusFilter('all')"
+                        >
+                          الكل
+                        </button>
+                        <button
+                          type="button"
+                          class="admin-filter-chip"
+                          data-status-filter="active"
+                          onclick="Admin.setStatusFilter('active')"
+                        >
+                          نشطة
+                        </button>
+                        <button
+                          type="button"
+                          class="admin-filter-chip"
+                          data-status-filter="soon"
+                          onclick="Admin.setStatusFilter('soon')"
+                        >
+                          قريباً
+                        </button>
+                        <button
+                          type="button"
+                          class="admin-filter-chip"
+                          data-status-filter="expired"
+                          onclick="Admin.setStatusFilter('expired')"
+                        >
+                          منتهية
+                        </button>
+                        <button
+                          type="button"
+                          class="admin-filter-chip"
+                          data-status-filter="hidden"
+                          onclick="Admin.setStatusFilter('hidden')"
+                        >
+                          مخفية
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Full Width Opportunities Stream -->
+                    <div
+                      id="admin-manage-list"
+                      class="admin-scroll-area custom-scrollbar"
+                      style="max-height: 600px"
+                    >
+                      <!-- سيتم حقن الكروت هنا بواسطة الجافاسكريبت -->
+                    </div>
+                  </div>
+                </section>
+
+
+
+                <!-- ==========================================
+                         الصفحة 3: نشر وإضافة فرصة جديدة (Publish Hub)
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-add-opp">
+                  <div class="admin-deck-full">
+                    <div class="prof-card-header" style="margin-bottom: 16px">
+                      <div style="display: flex; align-items: center; gap: 10px">
+                        <span
+                          style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary)"
+                          ><i
+                            class="fas fa-plus-circle"
+                            style="color: var(--adm-gold); margin-left: 8px"
+                          ></i>
+                          نشر فرصة جديدة</span
+                        >
+                      </div>
+                      <span style="font-size: 0.85rem; color: var(--text-muted)"
+                        >انقر على القسم المطلوب لفتح نموذج الإضافة الفوري</span
+                      >
+                    </div>
+
+                    <p
+                      style="
+                        color: var(--text-secondary);
+                        line-height: 1.7;
+                        margin-bottom: 24px;
+                        font-size: 0.92rem;
+                      "
+                    >
+                      اختر القسم الذي تود نشر فرصة جديدة تحته. سيتم حفظ الفرصة ونشرها مباشرة في
+                      المنصة وإرسال إشعار تنبيهي للأعضاء المهتمين بها.
+                    </p>
+
+                    <div class="admin-cat-pills-grid">
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="Admin.openModal('competitions', 'مسابقة', 'fas fa-trophy')"
+                      >
+                        <i
+                          class="fas fa-trophy"
+                          style="background: rgba(245, 158, 11, 0.15); color: #f59e0b"
+                        ></i>
+                        <div>
+                          <b>مسابقات</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >تحديات وجوائز كبرى</small
+                          >
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="
+                          Admin.openModal('scholarships', 'منحة دراسية', 'fas fa-graduation-cap')
+                        "
+                      >
+                        <i
+                          class="fas fa-graduation-cap"
+                          style="background: rgba(99, 102, 241, 0.15); color: #6366f1"
+                        ></i>
+                        <div>
+                          <b>منح دراسية</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >بكالوريوس وماجستير ودكتوراه</small
+                          >
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="
+                          Admin.openModal('volunteering', 'تطوع', 'fas fa-hand-holding-heart')
+                        "
+                      >
+                        <i
+                          class="fas fa-hand-holding-heart"
+                          style="background: rgba(16, 185, 129, 0.15); color: #10b981"
+                        ></i>
+                        <div>
+                          <b>تطوع</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >مبادرات وأنشطة مجتمعية</small
+                          >
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="Admin.openModal('jobs', 'وظيفة وتدريب', 'fas fa-briefcase')"
+                      >
+                        <i
+                          class="fas fa-briefcase"
+                          style="background: rgba(14, 165, 233, 0.15); color: #0ea5e9"
+                        ></i>
+                        <div>
+                          <b>وظائف وتدريب</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >فرص عمل وتدريب صيفي</small
+                          >
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="Admin.openModal('events', 'فعالية', 'fas fa-calendar-alt')"
+                      >
+                        <i
+                          class="fas fa-calendar-alt"
+                          style="background: rgba(236, 72, 153, 0.15); color: #ec4899"
+                        ></i>
+                        <div>
+                          <b>فعاليات</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >مؤتمرات وملتقيات طلابية</small
+                          >
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="Admin.openModal('courses', 'كورس مجاني', 'fas fa-book-open')"
+                      >
+                        <i
+                          class="fas fa-book-open"
+                          style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6"
+                        ></i>
+                        <div>
+                          <b>كورسات مجانية</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >دورات وشهادات تدريبية</small
+                          >
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="
+                          Admin.openModal('workshops', 'ورشة عمل', 'fas fa-chalkboard-teacher')
+                        "
+                      >
+                        <i
+                          class="fas fa-chalkboard-teacher"
+                          style="background: rgba(20, 184, 166, 0.15); color: #14b8a6"
+                        ></i>
+                        <div>
+                          <b>ورش عمل</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >جلسات تدريب عملية</small
+                          >
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="Admin.openModal('travel', 'فرصة سفر', 'fas fa-plane-departure')"
+                      >
+                        <i
+                          class="fas fa-plane-departure"
+                          style="background: rgba(239, 68, 68, 0.15); color: #ef4444"
+                        ></i>
+                        <div>
+                          <b>سفر ممول</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >تبادل ثقافي وتدريب دولي</small
+                          >
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="Admin.openModal('admission', 'قبول جامعي', 'fas fa-university')"
+                      >
+                        <i
+                          class="fas fa-university"
+                          style="background: rgba(249, 115, 22, 0.15); color: #f97316"
+                        ></i>
+                        <div>
+                          <b>قبول جامعي</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >إرشادات وتسهيلات القبول</small
+                          >
+                        </div>
+                      </button>
+                      <button type="button" class="admin-cat-pill-btn" onclick="ElevateLive.open()">
+                        <i
+                          class="fas fa-video"
+                          style="background: rgba(239, 68, 68, 0.15); color: #ef4444"
+                        ></i>
+                        <div>
+                          <b>ورش عمل مباشر</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >بث حي وتفاعل مباشر</small
+                          >
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        class="admin-cat-pill-btn"
+                        onclick="ElevateVideos.open()"
+                      >
+                        <i
+                          class="fas fa-clapperboard"
+                          style="background: rgba(14, 165, 233, 0.15); color: #0ea5e9"
+                        ></i>
+                        <div>
+                          <b>مكتبة الفيديوهات</b><br /><small
+                            style="color: var(--text-muted); font-size: 0.75rem"
+                            >فيديوهات مسجلة وشروحات</small
+                          >
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </section>
+
+
+
+                <!-- ==========================================
+                         الصفحة 4: جدول المواعيد والانتهاء (Schedule)
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-dates">
+                  <div class="admin-dates-grid">
+                    <!-- Column 1: Dated Opportunities -->
+                    <div class="admin-deck-full" style="margin-bottom: 0">
+                      <div class="prof-card-header" style="margin-bottom: 16px">
+                        <div style="display: flex; align-items: center; gap: 10px">
+                          <span
+                            style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary)"
+                            ><i
+                              class="fas fa-calendar-days"
+                              style="color: #0ea5e9; margin-left: 8px"
+                            ></i>
+                            فرص محدد لها موعد</span
+                          >
+                          <span class="admin-chip-pro admin-chip-date" id="admin-dated-sub-badge"
+                            >0</span
+                          >
+                        </div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted)"
+                          >مرتبة بالمواعيد</span
+                        >
+                      </div>
+                      <div
+                        id="admin-dated-list"
+                        class="admin-scroll-area custom-scrollbar"
+                        style="max-height: 550px"
+                      >
+                        <!-- الفرص بموعد -->
+                      </div>
+                    </div>
+
+                    <!-- Column 2: Undated Opportunities -->
+                    <div class="admin-deck-full" style="margin-bottom: 0">
+                      <div class="prof-card-header" style="margin-bottom: 16px">
+                        <div style="display: flex; align-items: center; gap: 10px">
+                          <span
+                            style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary)"
+                            ><i
+                              class="fas fa-infinity"
+                              style="color: #a855f7; margin-left: 8px"
+                            ></i>
+                            فرص مستمرة بدون موعد</span
+                          >
+                          <span
+                            class="admin-chip-pro admin-chip-category"
+                            id="admin-undated-sub-badge"
+                            >0</span
+                          >
+                        </div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted)"
+                          >مفتوحة طوال العام</span
+                        >
+                      </div>
+                      <div
+                        id="admin-undated-list"
+                        class="admin-scroll-area custom-scrollbar"
+                        style="max-height: 550px"
+                      >
+                        <!-- الفرص بدون موعد -->
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+
+
+                <!-- ==========================================
+                         الصفحة 5: شركاء النجاح (Partners)
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-partners">
+                  <div class="admin-two-cols-grid">
+                    <!-- Card 1: Add Partner -->
+                    <div class="admin-deck-full" style="border-color: rgba(16, 185, 129, 0.35)">
+                      <div
+                        class="prof-card-header"
+                        style="color: var(--accent-success); margin-bottom: 14px"
+                      >
+                        <span><i class="fas fa-handshake"></i> إضافة شريك نجاح جديد</span>
+                      </div>
+                      <p
+                        style="
+                          color: var(--text-muted);
+                          font-size: 0.88rem;
+                          line-height: 1.7;
+                          margin-bottom: 20px;
+                        "
+                      >
+                        قم بإضافة شريك نجاح جديد للمنصة ليظهر في قسم الشركاء، مع إمكانية إنشاء حساب
+                        دخول مخصص له لمتابعة فرصه والتفاعل مع المستخدمين.
+                      </p>
+                      <button
+                        class="a-submit-btn"
+                        style="
+                          width: 100%;
+                          background: linear-gradient(135deg, #10b981, #059669);
+                          margin: 0;
+                        "
+                        onclick="Admin.openPartnerModal()"
+                      >
+                        <i class="fas fa-plus-circle"></i> فتح نموذج إضافة شريك
+                      </button>
+                    </div>
+
+                    <!-- Card 2: Manage Partners -->
+                    <div class="admin-deck-full">
+                      <div class="prof-card-header" style="margin-bottom: 16px">
+                        <div style="display: flex; align-items: center; gap: 8px">
+                          <span style="font-weight: 800; color: var(--text-primary)"
+                            ><i
+                              class="fas fa-users-gear"
+                              style="color: #10b981; margin-left: 6px"
+                            ></i>
+                            الشركاء المعتمدين</span
+                          >
+                          <span
+                            class="admin-chip-pro admin-chip-active"
+                            id="admin-partners-count-badge"
+                            >0 شريك</span
+                          >
+                        </div>
+                      </div>
+                      <div
+                        id="admin-manage-partners-list"
+                        class="admin-scroll-area custom-scrollbar"
+                        style="max-height: 500px"
+                      >
+                        <!-- سيتم حقن الشركاء هنا برمجياً -->
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+
+
+                <!-- ==========================================
+                         الصفحة 6: دليل وقاعدة بيانات الأعضاء (Members)
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-members">
+                  <div class="admin-deck-full">
+                    <div
+                      class="admin-members-header-bar"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        gap: 14px;
+                        margin-bottom: 18px;
+                      "
+                    >
+                      <div>
+                        <div style="display: flex; align-items: center; gap: 10px">
+                          <h3
+                            style="
+                              margin: 0;
+                              font-size: 1.15rem;
+                              font-weight: 800;
+                              color: var(--text-primary);
+                            "
+                          >
+                            <i
+                              class="fas fa-users"
+                              style="color: var(--accent-primary); margin-left: 8px"
+                            ></i>
+                            دليل وقاعدة بيانات الأعضاء
+                          </h3>
+                          <span
+                            class="admin-chip-pro admin-chip-active"
+                            id="admin-members-count-badge"
+                            >0 عضو</span
+                          >
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin: 6px 0 0 0">
+                          جميع بيانات الأعضاء المسجلين (كلمات المرور محمية ومخفية أمنياً دائماً).
+                        </p>
+                      </div>
+                      <div class="admin-filters-bar">
+                        <button
+                          type="button"
+                          class="admin-filter-chip active"
+                          data-member-filter="all"
+                          onclick="Admin.setMemberFilter('all')"
+                        >
+                          الكل
+                        </button>
+                        <button
+                          type="button"
+                          class="admin-filter-chip"
+                          data-member-filter="active"
+                          onclick="Admin.setMemberFilter('active')"
+                        >
+                          النشطين
+                        </button>
+                        <button
+                          type="button"
+                          class="admin-filter-chip"
+                          data-member-filter="inactive"
+                          onclick="Admin.setMemberFilter('inactive')"
+                        >
+                          الموقوفين
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="admin-search-wrap" style="margin-bottom: 16px">
+                      <i class="fas fa-magnifying-glass"></i>
+                      <input
+                        type="text"
+                        id="admin-members-search"
+                        class="admin-search-input-pro"
+                        placeholder="ابحث بالاسم الكامل أو اسم المستخدم أو البريد الإلكتروني أو رقم الهاتف..."
+                        oninput="Admin.renderMembers()"
+                      />
+                    </div>
+
+                    <div
+                      id="admin-members-list"
+                      class="admin-scroll-area custom-scrollbar"
+                      style="max-height: 520px"
+                    ></div>
+                  </div>
+                </section>
+
+
+
+                <!-- ==========================================
+                         الصفحة 7: التفاعل والإشعارات العامة (Engagement)
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-engage">
+                  <div class="admin-two-cols-grid" style="grid-template-columns: 1fr 1fr">
+                    <!-- Card 1: Broadcast Notification -->
+                    <div class="admin-deck-full" style="border-color: rgba(245, 158, 11, 0.35)">
+                      <div class="prof-card-header" style="color: #f59e0b; margin-bottom: 14px">
+                        <span
+                          ><i class="fas fa-paper-plane"></i> إرسال إشعار فوري لجميع الأعضاء</span
+                        >
+                      </div>
+                      <p
+                        style="
+                          color: var(--text-muted);
+                          font-size: 0.88rem;
+                          line-height: 1.7;
+                          margin-bottom: 18px;
+                        "
+                      >
+                        أرسل تنبيهاً فورياً يصل لجميع المسجلين والزوار في المنصة فور فتحه، مع
+                        إمكانية إضافة رابط توجيه مباشر.
+                      </p>
+                      <button
+                        class="a-submit-btn"
+                        style="
+                          width: 100%;
+                          background: linear-gradient(135deg, #f59e0b, #d97706);
+                          margin: 0;
+                        "
+                        onclick="Admin.openNotificationModal()"
+                      >
+                        <i class="fas fa-bullhorn"></i> فتح نافذة إرسال إشعار عام
+                      </button>
+                    </div>
+
+                    <!-- Card 2: Interactions Moderation -->
+                    <div class="admin-deck-full" style="border-color: rgba(139, 92, 246, 0.35)">
+                      <div class="prof-card-header" style="color: #8b5cf6; margin-bottom: 14px">
+                        <span><i class="fas fa-comments"></i> إدارة التعليقات والإعجابات</span>
+                      </div>
+                      <p
+                        style="
+                          color: var(--text-muted);
+                          font-size: 0.88rem;
+                          line-height: 1.7;
+                          margin-bottom: 18px;
+                        "
+                      >
+                        مركز التحكم بتفاعلات المجتمع: استعرض جميع تعليقات وإعجابات الأعضاء مع
+                        إمكانية الحذف والإشراف بنقرة واحدة.
+                      </p>
+                      <button
+                        class="a-submit-btn"
+                        style="
+                          width: 100%;
+                          background: linear-gradient(135deg, #8b5cf6, #6366f1);
+                          margin: 0;
+                        "
+                        onclick="Admin.openInteractionsModal()"
+                      >
+                        <i class="fas fa-shield-halved"></i> إدارة ومراجعة جميع التفاعلات
+                      </button>
+                    </div>
+                  </div>
+                </section>
+
+
+
+                <!-- ==========================================
+                         الصفحة 8: حسابات فريق العمل (Team)
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-team">
+                  <div class="admin-two-cols-grid">
+                    <div class="admin-deck-full" style="border-color: rgba(245, 158, 11, 0.35)">
+                      <div class="prof-card-header" style="color: #f59e0b; margin-bottom: 14px">
+                        <span><i class="fas fa-user-plus"></i> إنشاء حساب عضو فريق</span>
+                      </div>
+                      <p
+                        style="
+                          color: var(--text-muted);
+                          font-size: 0.85rem;
+                          line-height: 1.6;
+                          margin-bottom: 16px;
+                        "
+                      >
+                        أنشئ حساباً لأحد أعضاء الفريق وحدّد الصلاحيات التي يستطيع استخدامها داخل
+                        لوحة الإدارة بدقة.
+                      </p>
+                      <form
+                        id="adminTeamForm"
+                        onsubmit="Admin.createTeamAccount(event)"
+                        class="admin-team-form"
+                      >
+                        <label class="admin-field-label">اسم العضو</label>
+                        <input
+                          type="text"
+                          id="team-name"
+                          class="admin-search-input-pro"
+                          style="margin-bottom: 12px"
+                          placeholder="مثال: أحمد محمد"
+                          required
+                        />
+
+                        <label class="admin-field-label">البريد الإلكتروني / اسم المستخدم</label>
+                        <input
+                          type="email"
+                          id="team-email"
+                          class="admin-search-input-pro"
+                          style="margin-bottom: 12px"
+                          placeholder="name@example.com"
+                          required
+                        />
+
+                        <label class="admin-field-label"
+                          >المسمى الوظيفي والدور في المجتمع (يظهر تحت اسمه للأعضاء)</label
+                        >
+                        <input
+                          type="text"
+                          id="team-role-title"
+                          class="admin-search-input-pro"
+                          style="margin-bottom: 12px"
+                          placeholder="مثال: مسؤول الأولاد، مشرف المسابقات، مرشد الطلاب..."
+                          required
+                        />
+
+                        <label class="admin-field-label">كلمة المرور (8 أحرف على الأقل)</label>
+                        <input
+                          type="text"
+                          id="team-password"
+                          class="admin-search-input-pro"
+                          style="margin-bottom: 12px"
+                          placeholder="••••••••"
+                          required
+                        />
+
+                        <label class="admin-field-label" style="margin-bottom: 8px"
+                          >الصلاحيات الممنوحة</label
+                        >
+                        <div class="admin-perms-grid" id="team-perms" style="margin-bottom: 14px">
+                          <label class="admin-perm-item"
+                            ><input type="checkbox" value="opps" /> إضافة وإدارة الفرص</label
+                          >
+                          <label class="admin-perm-item"
+                            ><input type="checkbox" value="partners" /> إدارة الشركاء</label
+                          >
+                          <label class="admin-perm-item"
+                            ><input type="checkbox" value="engage" /> التفاعل والإشعارات</label
+                          >
+                          <label class="admin-perm-item"
+                            ><input type="checkbox" value="members" /> عرض الأعضاء المسجلين</label
+                          >
+                          <label class="admin-perm-item"
+                            ><input type="checkbox" value="faq" /> الأسئلة الشائعة</label
+                          >
+                          <label class="admin-perm-item"
+                            ><input type="checkbox" value="inbox" /> صندوق الرسائل</label
+                          >
+                        </div>
+
+                        <label class="admin-perm-item" style="margin-bottom: 16px"
+                          ><input type="checkbox" id="team-active" checked /> تفعيل الحساب
+                          فوراً</label
+                        >
+
+                        <button
+                          type="submit"
+                          class="a-submit-btn"
+                          style="
+                            width: 100%;
+                            margin: 0;
+                            background: linear-gradient(135deg, #f59e0b, #d97706);
+                          "
+                        >
+                          <i class="fas fa-check"></i> إنشاء الحساب وتعيين الصلاحيات
+                        </button>
+                      </form>
+                    </div>
+
+                    <div class="admin-deck-full">
+                      <div class="prof-card-header" style="margin-bottom: 16px">
+                        <div style="display: flex; align-items: center; gap: 8px">
+                          <span style="font-weight: 800; color: var(--text-primary)"
+                            ><i
+                              class="fas fa-user-shield"
+                              style="color: #f59e0b; margin-left: 6px"
+                            ></i>
+                            حسابات طاقم الفريق الحالية</span
+                          >
+                          <span class="admin-chip-pro admin-chip-active" id="admin-team-count-badge"
+                            >0 حساب</span
+                          >
+                        </div>
+                      </div>
+                      <div
+                        id="admin-team-list"
+                        class="admin-scroll-area custom-scrollbar"
+                        style="max-height: 520px"
+                      ></div>
+                    </div>
+                  </div>
+                </section>
+
+
+
+                <!-- ==========================================
+                         الصفحة 9: الأسئلة الشائعة (FAQ)
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-faq">
+                  <div class="admin-two-cols-grid">
+                    <div class="admin-deck-full" style="border-color: rgba(16, 185, 129, 0.35)">
+                      <div class="prof-card-header" style="color: #10b981; margin-bottom: 14px">
+                        <span><i class="fas fa-circle-plus"></i> إضافة سؤال شائع جديد</span>
+                      </div>
+                      <form
+                        id="faq-admin-form"
+                        class="elv-form"
+                        onsubmit="return ElevateFAQ.save(event);"
+                      >
+                        <input type="hidden" name="id" />
+                        <label class="admin-field-label">السؤال</label>
+                        <input
+                          name="q"
+                          type="text"
+                          class="admin-search-input-pro"
+                          style="margin-bottom: 12px"
+                          required
+                          placeholder="مثال: هل الموقع مجاني للجميع؟"
+                        />
+                        <label class="admin-field-label">الإجابة التفصيلية</label>
+                        <textarea
+                          name="a"
+                          rows="4"
+                          class="admin-search-input-pro"
+                          style="margin-bottom: 14px"
+                          required
+                          placeholder="اكتب إجابة السؤال هنا..."
+                        ></textarea>
+                        <div style="display: flex; gap: 10px">
+                          <button
+                            class="a-submit-btn"
+                            type="submit"
+                            style="
+                              flex: 1;
+                              margin: 0;
+                              background: linear-gradient(135deg, #10b981, #059669);
+                            "
+                          >
+                            <i class="fas fa-save"></i> حفظ السؤال
+                          </button>
+                          <button
+                            class="a-submit-btn"
+                            type="button"
+                            id="faq-admin-cancel"
+                            style="display: none; background: #64748b; margin: 0"
+                            onclick="ElevateFAQ.reset()"
+                          >
+                            إلغاء
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="admin-deck-full">
+                      <div class="prof-card-header" style="margin-bottom: 16px">
+                        <div style="display: flex; align-items: center; gap: 8px">
+                          <span style="font-weight: 800; color: var(--text-primary)"
+                            ><i class="fas fa-list" style="color: #10b981; margin-left: 6px"></i>
+                            بنك الأسئلة الشائعة</span
+                          >
+                          <span class="admin-chip-pro admin-chip-active" id="admin-faq-count-badge"
+                            >0 سؤال</span
+                          >
+                        </div>
+                      </div>
+                      <div
+                        id="faq-admin-list"
+                        class="admin-scroll-area custom-scrollbar"
+                        style="max-height: 520px"
+                      ></div>
+                    </div>
+                  </div>
+                </section>
+
+
+
+                <!-- ==========================================
+                         الصفحة 10: خزينة الرقابة الحساسة للمجتمع والدردشات الخاصة
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-vault"></section>
+
+                <!-- ==========================================
+                         الصفحة 11: إدارة منصة Elevate Shorts
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-shorts"></section>
+
+                <!-- ==========================================
+                         الصفحة 12: إدارة مسابقات المنصة المباشرة
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-contests"></section>
+
+                <!-- ==========================================
+                         الصفحة 13: إنشاء حسابات مدرسين وإدارتها
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-teachers">
+                  <div
+                    class="admin-deck-full"
+                    style="border-color: rgba(59, 130, 246, 0.35); margin-bottom: 24px"
+                  >
+                    <div class="prof-card-header" style="color: #60a5fa; margin-bottom: 14px">
+                      <span><i class="fas fa-chalkboard-teacher"></i> إنشاء حسابات مدرسين</span>
+                    </div>
+                    <form id="adminTeacherForm" onsubmit="AdminTeachersApp.createTeacherAccount(event)">
+                      <div
+                        class="admin-form-grid"
+                        style="
+                          display: grid;
+                          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                          gap: 16px;
+                        "
+                      >
+                        <div class="admin-form-group">
+                          <label for="adm-teacher-name">اسم المدرس *</label>
+                          <input
+                            type="text"
+                            id="adm-teacher-name"
+                            placeholder="مثال: أ. أحمد حسام"
+                            required
+                          />
+                        </div>
+                        <div class="admin-form-group">
+                          <label for="adm-teacher-email">البريد الإلكتروني *</label>
+                          <input
+                            type="email"
+                            id="adm-teacher-email"
+                            placeholder="teacher@elevate.edu"
+                            required
+                          />
+                        </div>
+                        <div class="admin-form-group">
+                          <label for="adm-teacher-password">كلمة السر * (8 أحرف على الأقل)</label>
+                          <input
+                            type="password"
+                            id="adm-teacher-password"
+                            placeholder="••••••••"
+                            minlength="8"
+                            required
+                          />
+                        </div>
+                        <div class="admin-form-group">
+                          <label for="adm-teacher-phone">الرقم (الهاتف / واتساب) *</label>
+                          <input
+                            type="tel"
+                            id="adm-teacher-phone"
+                            placeholder="مثال: 201012345678"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div style="margin: 18px 0; display: flex; align-items: center; gap: 12px">
+                        <input
+                          type="checkbox"
+                          id="adm-teacher-active"
+                          checked
+                          style="width: 20px; height: 20px; accent-color: #3b82f6"
+                        />
+                        <label
+                          for="adm-teacher-active"
+                          style="cursor: pointer; font-weight: 700; color: #e2e8f0"
+                          >تفعيل الحساب (تفعيل الآن للسماح للمدرس بالدخول فوراً)</label
+                        >
+                      </div>
+
+                      <button
+                        type="submit"
+                        class="admin-cat-btn"
+                        style="
+                          background: linear-gradient(135deg, #3b82f6, #2563eb);
+                          font-weight: 800;
+                          padding: 12px 24px;
+                        "
+                      >
+                        <i class="fas fa-user-plus"></i> إنشاء حساب المدرس
+                      </button>
+                    </form>
+                  </div>
+
+                  <div class="admin-deck-full">
+                    <div class="prof-card-header" style="margin-bottom: 14px">
+                      <span>قائمة حسابات المدرسين</span><i class="fas fa-users-gear"></i>
+                    </div>
+                    <div style="overflow-x: auto">
+                      <table class="subscribers-table">
+                        <thead>
+                          <tr>
+                            <th>اسم المدرس</th>
+                            <th>البريد</th>
+                            <th>الرقم</th>
+                            <th>حالة التفعيل والكورسات</th>
+                            <th>الإجراءات</th>
+                          </tr>
+                        </thead>
+                        <tbody id="admin-teachers-tbody">
+                          <!-- Injected by AdminTeachersApp -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- ==========================================
+                         الصفحة 14: التحكم الشامل في ظهور وحالة الأقسام والصفحات
+                    ========================================== -->
+                <section class="admin-section" id="adm-sec-visibility">
+                  <div class="admin-deck-full" style="margin-bottom: 24px">
+                    <div class="prof-card-header" style="margin-bottom: 16px">
+                      <div style="display: flex; align-items: center; gap: 10px">
+                        <i class="fas fa-sliders" style="color: #10b981; font-size: 1.3rem"></i>
+                        <span style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary)">
+                          التحكم الشامل في ظهور وحالة أقسام وصفحات الموقع (14 قسماً)
+                        </span>
+                      </div>
+                      <span class="admin-chip-pro admin-chip-active">تحكم فوري مباشر</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.7">
+                      يمكنك كمدير إخفاء أي قسم بالكامل، أو وضعه في وضع <strong>(قريباً)</strong> بحيث يظهر للمستخدمين أنه مغلق وممنوع فتحه تماماً، أو إعادته كـ <strong>(ظاهر للجميع)</strong>.
+                    </p>
+
+                    <div id="admin-sections-visibility-grid" class="admin-visibility-grid">
+                      <!-- Injected by Admin.renderSectionsVisibility() -->
+                    </div>
+                  </div>
+                </section>
+
+
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <!-- صفحة الشريك -->
+      <div id="partner-view" class="partner-page" style="display: none">
+        <div class="container">
+          <div class="partner-page-toolbar">
+            <a href="index.html" class="partner-back-btn"
+              ><i class="fas fa-arrow-right"></i> العودة للرئيسية</a
+            >
+            <span class="partner-page-eyebrow"
+              ><i class="fas fa-handshake"></i> شريك نجاح في Elevate</span
+            >
+          </div>
+          <section class="partner-page-hero" aria-labelledby="partner-view-name">
+            <div class="partner-page-head">
+              <div class="partner-page-logo-wrap">
+                <img
+                  id="partner-view-logo"
+                  src="images/logo.png"
+                  alt=""
+                  class="partner-page-logo"
+                />
+                <span class="partner-logo-check" title="شريك موثوق"
+                  ><i class="fas fa-check"></i
+                ></span>
+              </div>
+              <div class="partner-page-titles">
+                <span id="partner-view-type" class="partner-page-type">شريك</span>
+                <h1 id="partner-view-name" class="partner-page-name"></h1>
+                <span class="partner-verified static"
+                  ><i class="fas fa-circle-check"></i> شريك موثوق</span
+                >
+              </div>
+            </div>
+            <div class="partner-page-meta">
+              <div id="partner-view-socials" class="partner-socials"></div>
+              <div id="partner-view-stats" class="partner-page-stats"></div>
+            </div>
+          </section>
+          <section class="partner-opportunities-section">
+            <div class="partner-page-section-head">
+              <div>
+                <span class="partner-section-kicker">الفرص المنشورة</span>
+                <h2 class="partner-page-section-title">فرص هذا الشريك</h2>
+              </div>
+              <span class="partner-section-mark"><i class="fas fa-layer-group"></i></span>
+            </div>
+            <div id="partner-view-opps" class="opp-cards-grid partner-opps-grid"></div>
+          </section>
+        </div>
+      </div>
+
+      
+
+      <!-- =========================================
+       القسم: مجتمع Elevate (WhatsApp Community Style)
+  ========================================= -->
+      <div id="community-view" style="display: none"></div>
+
+      <!-- =========================================
+       القسم: Elevate Shorts (TikTok/Reels/Shorts Style)
+  ========================================= -->
+      <div id="shorts-view" style="display: none"></div>
+
+      <!-- =========================================
+       القسم: مسابقات المنصة المباشرة (Live Battles Arena)
+  ========================================= -->
+      <div id="contests-view" style="display: none"></div>
+
+      <!-- =========================================
+       القسم الخامس: صفحة تسجيل الدخول (Login View)
+  ========================================= -->
+      <div
+        id="login-view"
+        style="
+          display: none;
+          position: relative;
+          min-height: 100vh;
+          align-items: center;
+          justify-content: center;
+          padding: 40px 20px;
+        "
+      >
+        <div class="bg-canvas" style="position: absolute; z-index: -1">
+          <div class="glow-orb glow-1"></div>
+          <div class="glow-orb glow-2"></div>
+          <div class="glow-orb glow-3"></div>
+          <div class="bg-grid"></div>
+        </div>
+
+        <div class="wrapper" style="max-width: 480px; margin: 0 auto; width: 100%">
+          <div class="card login-auth-card">
+            <div class="brand-header">
+              <a href="index.html" class="brand-logo">
+                <div class="logo-icon-box">
+                  <i class="fa-solid fa-rocket"></i>
+                </div>
+                <span class="brand-title">Elevate</span>
+              </a>
+              <span class="brand-badge">الجيل القادم</span>
+            </div>
+
+            <div class="tab-switcher">
+              <div class="tab-indicator" id="tabIndicator"></div>
+              <button
+                type="button"
+                class="tab-btn active"
+                id="loginTabBtn"
+                onclick="switchTab('login')"
+              >
+                تسجيل الدخول
+              </button>
+              <button
+                type="button"
+                class="tab-btn"
+                id="registerTabBtn"
+                onclick="switchTab('register')"
+              >
+                حساب جديد
+              </button>
+            </div>
+
+            <div id="alertBox" class="alert-box"></div>
+
+            <div id="loginForm" class="form-content active">
+              <div class="form-heading">
+                <h2>أهلاً بك مجدداً! 👋</h2>
+                <p>أدخل بياناتك للاستمرار في رحلة التعلم والتطوير</p>
+              </div>
+
+              <form id="loginFormElement" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                  <label class="input-label">اسم المستخدم، البريد الإلكتروني أو الهاتف</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="text"
+                      id="loginIdentifier"
+                      class="input-field"
+                      placeholder="اسم المستخدم أو البريد أو الهاتف"
+                      required
+                      autocomplete="username"
+                    />
+                    <i class="fa-regular fa-user input-icon-right"></i>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label">كلمة المرور</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="password"
+                      id="loginPassword"
+                      class="input-field"
+                      placeholder="••••••••"
+                      required
+                      autocomplete="current-password"
+                    />
+                    <i class="fa-solid fa-lock input-icon-right"></i>
+                    <button
+                      type="button"
+                      class="toggle-password"
+                      onclick="togglePasswordVisibility('loginPassword', this)"
+                    >
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-options">
+                  <label class="remember-me">
+                    <input type="checkbox" id="rememberMe" checked />
+                    <span class="custom-checkbox"><i class="fa-solid fa-check"></i></span>
+                    <span class="checkbox-label">تذكر جلسة الدخول</span>
+                  </label>
+                  <a href="#" class="forgot-link" onclick="handleForgotPassword(event)"
+                    >نسيت كلمة المرور؟</a
+                  >
+                </div>
+
+                <button type="submit" class="btn-submit">
+                  <span>تسجيل الدخول</span>
+                  <i class="fa-solid fa-arrow-left"></i>
+                </button>
+              </form>
+
+              <div class="divider">
+                <span>أو المتابعة باستخدام</span>
+              </div>
+
+              <div class="social-btns" style="display: flex; justify-content: center; width: 100%;">
+                <button
+                  type="button"
+                  class="social-btn"
+                  onclick="loginWithGoogle()"
+                  style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;"
+                >
+                  <svg class="social-icon" width="20" height="20" viewBox="0 0 48 48">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                  </svg>
+                  <span>تسجيل الدخول بواسطة Google</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="registerForm" class="form-content">
+              <div class="form-heading">
+                <h2>انضم إلى Elevate 🚀</h2>
+                <p>ابدأ رحلتك واستكشف الفرص والدورات التعليمية</p>
+              </div>
+
+              <form id="registerFormElement" onsubmit="handleRegister(event)">
+                <div class="input-group">
+                  <label class="input-label">الاسم الكامل</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="text"
+                      id="regFullName"
+                      class="input-field"
+                      placeholder="مثال: أحمد محمود"
+                      required
+                      autocomplete="name"
+                    />
+                    <i class="fa-regular fa-user input-icon-right"></i>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="input-group flex-1">
+                    <label class="input-label">اسم المستخدم</label>
+                    <div class="input-wrapper">
+                      <input
+                        type="text"
+                        id="regUsername"
+                        class="input-field"
+                        placeholder="ahmed_dev"
+                        required
+                        autocomplete="username"
+                      />
+                      <i class="fa-solid fa-at input-icon-right"></i>
+                    </div>
+                  </div>
+                  <div class="input-group flex-1">
+                    <label class="input-label">رقم الهاتف</label>
+                    <div class="input-wrapper">
+                      <input
+                        type="tel"
+                        id="regPhone"
+                        class="input-field"
+                        placeholder="01000000000"
+                        required
+                        autocomplete="tel"
+                      />
+                      <i class="fa-solid fa-phone input-icon-right"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label">البريد الإلكتروني (اختياري)</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="email"
+                      id="regEmail"
+                      class="input-field"
+                      placeholder="name@example.com"
+                      autocomplete="email"
+                    />
+                    <i class="fa-regular fa-envelope input-icon-right"></i>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label">كلمة المرور</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="password"
+                      id="regPassword"
+                      class="input-field"
+                      placeholder="8+ أحرف تحتوي على أرقام ورموز"
+                      required
+                      autocomplete="new-password"
+                    />
+                    <i class="fa-solid fa-shield-halved input-icon-right"></i>
+                    <button
+                      type="button"
+                      class="toggle-password"
+                      onclick="togglePasswordVisibility('regPassword', this)"
+                    >
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label">تأكيد كلمة المرور</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="password"
+                      id="regConfirmPassword"
+                      class="input-field"
+                      placeholder="أعد كتابة كلمة المرور"
+                      required
+                      autocomplete="new-password"
+                    />
+                    <i class="fa-solid fa-check-double input-icon-right"></i>
+                    <button
+                      type="button"
+                      class="toggle-password"
+                      onclick="togglePasswordVisibility('regConfirmPassword', this)"
+                    >
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn-submit" style="margin-top: 10px">
+                  <span>إنشاء الحساب الآن</span>
+                  <i class="fa-solid fa-user-plus"></i>
+                </button>
+              </form>
+
+              <div class="divider">
+                <span>أو المتابعة باستخدام</span>
+              </div>
+
+              <div class="social-btns" style="display: flex; justify-content: center; width: 100%;">
+                <button
+                  type="button"
+                  class="social-btn"
+                  onclick="loginWithGoogle()"
+                  style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;"
+                >
+                  <svg class="social-icon" width="20" height="20" viewBox="0 0 48 48">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                  </svg>
+                  <span>إنشاء حساب بواسطة Google</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav">
+      <a href="index.html" class="bottom-nav-item active" data-nav="home"
+        ><i class="fas fa-home"></i><span>الرئيسية</span></a
+      >
+      <a href="?category=competitions" class="bottom-nav-item" data-nav="competitions"
+        ><i class="fas fa-trophy"></i><span>مسابقات</span></a
+      >
+      <a href="?category=volunteering" class="bottom-nav-item" data-nav="volunteering"
+        ><i class="fas fa-handshake"></i><span>تطوع</span></a
+      >
+      <a href="?view=profile" class="bottom-nav-item" data-nav="profile"
+        ><i class="fas fa-user"></i><span>حسابي</span></a
+      >
+    </div>
+
+    <!-- ====================================================================
+     نافذة الإضافة والتعديل للفرص
+===================================================================== -->
+    <div id="adminDataModal" class="admin-data-overlay" style="display: none">
+      <div class="admin-data-box">
+        <div class="admin-data-header">
+          <button class="admin-data-close" type="button" onclick="Admin.closeModal()">
+            <i class="fas fa-times"></i>
+          </button>
+          <div class="admin-data-title">
+            <span id="modalCatName">إضافة مسابقة</span>
+            <i id="modalCatIcon" class="fas fa-trophy"></i>
+          </div>
+        </div>
+
+        <div class="admin-status-row">
+          <button
+            type="button"
+            class="a-status-btn"
+            id="btn-status-soon"
+            onclick="Admin.handleStatusClick('soon')"
+          >
+            <i class="far fa-clock"></i> قريباً
+          </button>
+          <button
+            type="button"
+            class="a-status-btn"
+            id="btn-status-expired"
+            onclick="Admin.setStatus('expired')"
+          >
+            <i class="far fa-calendar-times"></i> منتهية
+          </button>
+          <button
+            type="button"
+            class="a-status-btn"
+            id="btn-status-hide"
+            onclick="Admin.handleStatusClick('hidden')"
+          >
+            <i class="far fa-eye-slash"></i> إخفاء البطاقة
+          </button>
+          <button
+            type="button"
+            class="a-status-btn active-green"
+            id="btn-status-show"
+            onclick="Admin.setStatus('visible')"
+          >
+            <i class="far fa-eye"></i> إظهار البطاقة
+          </button>
+        </div>
+
+        <form id="adminDataForm" class="admin-data-form" onsubmit="Admin.saveData(event)">
+          <!-- حقول مخفية للتعرف على البيانات -->
+          <input type="hidden" id="formOppId" />
+          <input type="hidden" id="formOppCategory" />
+          <input type="hidden" id="formOppStatus" value="visible" />
+
+          <div class="a-form-row">
+            <div class="a-input-group">
+              <label>التصنيف</label>
+              <input
+                type="text"
+                id="formCompany"
+                placeholder="مثال: هندسة، طبي، أونلاين..."
+                required
+              />
+            </div>
+            <div class="a-input-group">
+              <label>الاسم (العنوان)</label>
+              <input type="text" id="formTitle" placeholder="اكتب العنوان هنا..." required />
+            </div>
+          </div>
+
+          <div class="a-form-row">
+            <div class="a-input-group">
+              <label>رابط الصورة الداخلية (التي تظهر لجوا)</label>
+              <input type="url" id="formInnerImg" placeholder="https://..." />
+            </div>
+            <div class="a-input-group">
+              <label>رابط الصورة الخارجية (التي تظهر لبره)</label>
+              <input type="url" id="formOuterImg" placeholder="https://..." />
+            </div>
+          </div>
+
+          <div class="a-form-row">
+            <div
+              class="a-input-group"
+              style="align-items: flex-end; justify-content: flex-end; display: flex"
+            >
+              <label class="a-checkbox-box">
+                <span style="font-weight: bold; color: #fff; margin-right: 10px"
+                  >تعيين كبطاقة مميزة</span
+                >
+                <input type="checkbox" id="formFeatured" />
+                <span class="a-checkmark"></span>
+              </label>
+            </div>
+            <div class="a-input-group">
+              <label>الهاشتاجات (مفصولة بمسافة)</label>
+              <input type="text" id="formTags" placeholder="#برمجة #هندسة" />
+            </div>
+          </div>
+
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label>تحديد بداية المدة (Start Date)</label>
+              <input type="date" id="formStartDate" style="color-scheme: dark" />
+              <label class="a-checkbox-box" style="margin-top: 10px">
+                <span style="font-weight: bold; color: #fff; margin-right: 10px">مفتوح الآن</span>
+                <input type="checkbox" id="formOpenNow" onchange="Admin.toggleNoDates()" />
+                <span class="a-checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label>تحديد آخر موعد (Deadline)</label>
+              <input type="date" id="formDate" required style="color-scheme: dark" />
+            </div>
+          </div>
+
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label class="a-checkbox-box">
+                <span style="font-weight: bold; color: #fff; margin-right: 10px"
+                  >لم يتم تحديد آخر موعد</span
+                >
+                <input type="checkbox" id="formNoDeadline" onchange="Admin.toggleNoDates()" />
+                <span class="a-checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label class="a-checkbox-box">
+                <span style="font-weight: bold; color: #fff; margin-right: 10px"
+                  >لم يتم تحديد موعد (البداية والنهاية)</span
+                >
+                <input type="checkbox" id="formNoDates" onchange="Admin.toggleNoDates()" />
+                <span class="a-checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label>الوصف</label>
+              <textarea
+                id="formDescription"
+                rows="4"
+                placeholder="اكتب الوصف أو تفاصيل العنصر هنا..."
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="a-submit-btn">
+            <i class="fas fa-save"></i> حفظ البيانات
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+     النافذة المنبثقة لإضافة شريك جديد
+===================================================================== -->
+    <div id="adminPartnerModal" class="admin-data-overlay" style="display: none">
+      <div class="admin-data-box">
+        <div class="admin-data-header">
+          <button class="admin-data-close" type="button" onclick="Admin.closePartnerModal()">
+            <i class="fas fa-times"></i>
+          </button>
+          <div class="admin-data-title">
+            <span id="modalPartnerTitle">إضافة شريك جديد</span>
+            <i class="fas fa-handshake"></i>
+          </div>
+        </div>
+
+        <form id="adminPartnerForm" class="admin-data-form" onsubmit="Admin.savePartner(event)">
+          <input type="hidden" id="formPartnerId" />
+
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label>اسم الشريك</label>
+              <input type="text" id="formPartnerName" placeholder="مثال: Gateway Steps" required />
+            </div>
+          </div>
+
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label>النوع (أنت من يكتبه)</label>
+              <input
+                type="text"
+                id="formPartnerType"
+                placeholder="مثال: مسار مهني، تعليمي، مجتمع..."
+                required
+              />
+            </div>
+          </div>
+
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label>رابط اللوجو (درايف أو أي رابط صورة)</label>
+              <input type="url" id="formPartnerLogo" placeholder="https://..." required />
+            </div>
+          </div>
+
+          <button type="submit" class="a-submit-btn">
+            <i class="fas fa-save"></i> حفظ بيانات الشريك
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- نافذة الاختيار للفرص -->
+    <div id="adminChoiceModal" class="admin-choice-overlay" style="display: none">
+      <div class="admin-choice-box">
+        <h3 style="margin-bottom: 10px; color: white">تحديد مستوى الإجراء</h3>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 25px">
+          أين تريد تطبيق هذه الحالة (تشويش وإغلاق / إخفاء)؟
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <button type="button" class="a-choice-btn primary" onclick="Admin.applyToSection()">
+            <i class="fas fa-th-large"></i> القسم بالكامل (من صفحة التصنيفات الرئيسية)
+          </button>
+          <button type="button" class="a-choice-btn secondary" onclick="Admin.applyToOpp()">
+            <i class="fas fa-id-card"></i> هذه الفرصة فقط (من صفحة عرض الفرص)
+          </button>
+        </div>
+        <button
+          type="button"
+          onclick="document.getElementById('adminChoiceModal').style.display = 'none'"
+          style="
+            margin-top: 15px;
+            background: transparent;
+            color: #ef4444;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+          "
+        >
+          إلغاء
+        </button>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+     نافذة إدارة التعليقات والإعجابات (الجديدة)
+===================================================================== -->
+    <div id="adminInteractionsModal" class="admin-data-overlay" style="display: none">
+      <div class="admin-data-box" style="max-width: 700px">
+        <div class="admin-data-header">
+          <button
+            class="admin-data-close"
+            type="button"
+            onclick="document.getElementById('adminInteractionsModal').style.display = 'none'"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+          <div class="admin-data-title">
+            <span>إدارة التفاعل (تعليقات وإعجابات)</span>
+            <i class="fas fa-comments"></i>
+          </div>
+        </div>
+
+        <div
+          class="prof-tabs"
+          style="
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+          "
+        >
+          <div
+            class="prof-tab active"
+            id="tab-comments-btn"
+            onclick="Admin.switchInteractionTab('comments')"
+            style="color: white; border-color: #8b5cf6"
+          >
+            التعليقات
+          </div>
+          <div
+            class="prof-tab"
+            id="tab-likes-btn"
+            onclick="Admin.switchInteractionTab('likes')"
+            style="color: white"
+          >
+            الإعجابات
+          </div>
+        </div>
+
+        <!-- منطقة التعليقات -->
+        <div
+          id="admin-comments-view"
+          class="custom-scrollbar"
+          style="max-height: 400px; overflow-y: auto; padding-left: 10px"
+        >
+          <!-- سيتم حقن التعليقات هنا من الجافاسكريبت -->
+        </div>
+
+        <!-- منطقة الإعجابات -->
+        <div
+          id="admin-likes-view"
+          class="custom-scrollbar"
+          style="max-height: 400px; overflow-y: auto; padding-left: 10px; display: none"
+        >
+          <!-- سيتم حقن الإعجابات هنا من الجافاسكريبت -->
+        </div>
+      </div>
+
+      
+    </div>
+
+    <!-- ====================================================================
+     نافذة إرسال إشعار للأعضاء (الجديدة)
+===================================================================== -->
+    <div id="adminNotificationModal" class="admin-data-overlay" style="display: none">
+      <div class="admin-data-box">
+        <div class="admin-data-header">
+          <button
+            class="admin-data-close"
+            type="button"
+            onclick="document.getElementById('adminNotificationModal').style.display = 'none'"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+          <div class="admin-data-title">
+            <span>إرسال إشعار للجميع</span>
+            <i class="fas fa-paper-plane"></i>
+          </div>
+        </div>
+        <form
+          id="adminNotificationForm"
+          class="admin-data-form"
+          onsubmit="Admin.sendNotificationToAll(event)"
+        >
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label>عنوان الإشعار</label>
+              <input
+                type="text"
+                id="notifTitle"
+                placeholder="مثال: تم إضافة منح دراسية جديدة!"
+                required
+              />
+            </div>
+          </div>
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label>تفاصيل الرسالة</label>
+              <textarea
+                id="notifMessage"
+                rows="3"
+                placeholder="اكتب محتوى الإشعار هنا..."
+                required
+              ></textarea>
+            </div>
+          </div>
+          <div class="a-form-row full-w">
+            <div class="a-input-group">
+              <label>رابط التوجيه (اختياري)</label>
+              <input type="text" id="notifLink" placeholder="مثال: ?category=scholarships" />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="a-submit-btn"
+            style="background: linear-gradient(135deg, #f59e0b, #d97706)"
+          >
+            <i class="fas fa-paper-plane"></i> إرسال الإشعار الآن
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+      }
+
+      function filterOpportunitiesRaw(query) {
+        // شريط الفلترة الجديد (opp-filters.js) بيجمع البحث مع النوع والحالة والترتيب.
+        if (window.ElevateFilters && typeof window.ElevateFilters.apply === "function") {
+          window.ElevateFilters.apply();
+          return;
+        }
+        const cards = document.querySelectorAll(".opp-card");
+        const lowerQuery = query.toLowerCase();
+        cards.forEach((card) => {
+          const title = card.getAttribute("data-title").toLowerCase();
+          const tags = card.getAttribute("data-tags")
+            ? card.getAttribute("data-tags").toLowerCase()
+            : "";
+          if (card.style.display !== "none" || query === "") {
+            if (title.includes(lowerQuery) || tags.includes(lowerQuery)) {
+              card.style.display = "flex";
+            } else {
+              card.style.display = "none";
+            }
+          }
+        });
+      }
+
+      const debouncedFilterOpportunities = debounce(filterOpportunitiesRaw, 300);
+    </script>
+
+    <script src="drive-image.js?v=20260903"></script>
+    <script src="script.js?v=20261106_statuscontrol"></script>
+    <script src="extras.js?v=20260907a"></script>
+    <script src="live.js?v=20260907a"></script>
+    <script src="videos.js?v=20260907a"></script>
+    <script src="faq.js?v=20260907a"></script>
+    <script src="student-hub.js?v=20260917a"></script>
+    <script src="partner-space.js?v=20260925a"></script>
+    <script src="student-plus.js?v=20260919a"></script>
+    <script src="admin-plus.js?v=20260919a"></script>
+    <script src="opp-filters.js?v=20261106_searchlive"></script>
+    <script src="password-resets.js?v=20260920a"></script>
+    <script src="wow.js?v=1"></script>
+    <script src="language.js?v=20261001a"></script>
+    <script src="elevate-boost.js?v=2"></script>
+    <script src="profile-plus.js?v=1"></script>
+    <script src="home-plus.js?v=3"></script>
+    <script src="community.js?v=1"></script>
+    <script src="shorts.js?v=3"></script>
+    <script src="contests.js?v=1"></script>
+    <script src="courses.js?v=1"></script>
+  </body>
+</html>
