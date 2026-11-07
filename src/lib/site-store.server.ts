@@ -71,22 +71,36 @@ export const json = (body: unknown, status = 200, customHeaders: Record<string, 
 
 /* --------------------------- Resilient Local Storage Engine --------------------------- */
 
-const DATA_DIR = path.resolve(process.cwd(), "data");
+const IS_SERVERLESS = Boolean(process.env.VERCEL || process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const BASE_DATA_DIR = path.resolve(process.cwd(), "data");
+const BASE_DATA_FILE = path.resolve(BASE_DATA_DIR, "site_store.json");
+
+const DATA_DIR = IS_SERVERLESS ? "/tmp" : BASE_DATA_DIR;
 const DATA_FILE = path.resolve(DATA_DIR, "site_store.json");
 
 const inMemoryStore = new Map<string, unknown>();
-let isStoreLoaded = false;
+let lastLoadedMtime = 0;
 
 function loadLocalStoreFromFile(): void {
-  if (isStoreLoaded) return;
-  isStoreLoaded = true;
   try {
-    if (fs.existsSync(DATA_FILE)) {
-      const raw = fs.readFileSync(DATA_FILE, "utf-8");
-      const parsed = JSON.parse(raw);
-      if (typeof parsed === "object" && parsed !== null) {
-        for (const [k, v] of Object.entries(parsed)) {
-          inMemoryStore.set(k, v);
+    // If in serverless and /tmp/site_store.json does not exist yet, seed it from base data
+    if (IS_SERVERLESS && !fs.existsSync(DATA_FILE) && fs.existsSync(BASE_DATA_FILE)) {
+      try {
+        fs.copyFileSync(BASE_DATA_FILE, DATA_FILE);
+      } catch {}
+    }
+
+    const fileToRead = fs.existsSync(DATA_FILE) ? DATA_FILE : (fs.existsSync(BASE_DATA_FILE) ? BASE_DATA_FILE : null);
+    if (fileToRead) {
+      const stat = fs.statSync(fileToRead);
+      if (stat.mtimeMs > lastLoadedMtime) {
+        lastLoadedMtime = stat.mtimeMs;
+        const raw = fs.readFileSync(fileToRead, "utf-8");
+        const parsed = JSON.parse(raw);
+        if (typeof parsed === "object" && parsed !== null) {
+          for (const [k, v] of Object.entries(parsed)) {
+            inMemoryStore.set(k, v);
+          }
         }
       }
     }
@@ -104,9 +118,10 @@ function persistLocalStoreToFile(): void {
     for (const [k, v] of inMemoryStore.entries()) {
       obj[k] = v;
     }
-    const tempFile = path.resolve(DATA_DIR, `site_store.${Date.now()}.${Math.random().toString(36).slice(2, 6)}.tmp`);
-    fs.writeFileSync(tempFile, JSON.stringify(obj, null, 2), "utf-8");
-    fs.renameSync(tempFile, DATA_FILE);
+    fs.writeFileSync(DATA_FILE, JSON.stringify(obj, null, 2), "utf-8");
+    if (fs.existsSync(DATA_FILE)) {
+      lastLoadedMtime = fs.statSync(DATA_FILE).mtimeMs;
+    }
   } catch (err) {
     console.warn("[Elevate Local Store] Error saving file store:", err);
   }

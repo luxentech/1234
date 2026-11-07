@@ -4002,6 +4002,7 @@ function handleRegister(event) {
   const fullName = document.getElementById("regFullName").value.trim();
   const username = document.getElementById("regUsername").value.trim();
   const phone = document.getElementById("regPhone").value.trim();
+  const email = (document.getElementById("regEmail")?.value || "").trim();
   const password = document.getElementById("regPassword").value;
   const confirmPassword = document.getElementById("regConfirmPassword").value;
   const confirmInput = document.getElementById("regConfirmPassword");
@@ -4027,6 +4028,7 @@ function handleRegister(event) {
     password: password,
     fullName: fullName,
     phone: phone,
+    email: email,
   })
     .then(function (res) {
       if (res.ok && res.data && res.data.user) {

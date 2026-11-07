@@ -56,6 +56,33 @@ describe("Database & Auth Integration", () => {
     expect(loginAgain.ok).toBe(true);
   });
 
+  it("allows login by phone number, by email, and by username", async () => {
+    const testUsername = "multilogin_" + Date.now();
+    const testPhone = "01199" + Math.floor(100000 + Math.random() * 900000);
+    const testEmail = "multi_" + Date.now() + "@elevate.com";
+
+    const res = await registerUser({
+      username: testUsername,
+      password: "Password1234!",
+      fullName: "مستخدم متعدد الدخول",
+      phone: testPhone,
+      email: testEmail,
+    });
+    expect(res.ok).toBe(true);
+
+    // Login via username
+    const uRes = await loginUser(testUsername, "Password1234!");
+    expect(uRes.ok).toBe(true);
+
+    // Login via phone
+    const pRes = await loginUser(testPhone, "Password1234!");
+    expect(pRes.ok).toBe(true);
+
+    // Login via email
+    const eRes = await loginUser(testEmail, "Password1234!");
+    expect(eRes.ok).toBe(true);
+  });
+
   it("persists cards and partners immediately to the database", async () => {
     const testCard = [{ id: "opp_test_1", name: "منحة تجريبية", type: "scholarships" }];
     await writeStoreKey("luxen_general_cards", testCard, "test");

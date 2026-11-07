@@ -75,7 +75,10 @@ function findUser(users: UserRecord[], identifier: string): UserRecord | undefin
   const id = norm(identifier);
   if (!id) return undefined;
   return users.find(
-    (u) => u && typeof u === "object" && [norm(u["username"]), norm(u["email"])].includes(id),
+    (u) =>
+      u &&
+      typeof u === "object" &&
+      [norm(u["username"]), norm(u["email"]), norm(u["phone"])].includes(id),
   );
 }
 

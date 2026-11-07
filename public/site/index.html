@@ -3112,17 +3112,17 @@
 
               <form id="loginFormElement" onsubmit="handleLogin(event)">
                 <div class="input-group">
-                  <label class="input-label">اسم المستخدم أو البريد الإلكتروني</label>
+                  <label class="input-label">اسم المستخدم، البريد الإلكتروني أو الهاتف</label>
                   <div class="input-wrapper">
                     <input
                       type="text"
                       id="loginIdentifier"
                       class="input-field"
-                      placeholder="name@example.com"
+                      placeholder="اسم المستخدم أو البريد أو الهاتف"
                       required
                       autocomplete="username"
                     />
-                    <i class="fa-regular fa-envelope input-icon-right"></i>
+                    <i class="fa-regular fa-user input-icon-right"></i>
                   </div>
                 </div>
 
@@ -3216,6 +3216,20 @@
                       />
                       <i class="fa-solid fa-phone input-icon-right"></i>
                     </div>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label">البريد الإلكتروني (اختياري)</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="email"
+                      id="regEmail"
+                      class="input-field"
+                      placeholder="name@example.com"
+                      autocomplete="email"
+                    />
+                    <i class="fa-regular fa-envelope input-icon-right"></i>
                   </div>
                 </div>
 
