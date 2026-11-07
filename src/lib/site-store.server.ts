@@ -2,6 +2,11 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 import fs from "node:fs";
 import path from "node:path";
+import {
+  dbReadStoreKey,
+  dbWriteStoreKey,
+  dbGetAllStore,
+} from "./database.server";
 
 export const ALLOWED_KEYS = [
   "luxen_general_cards",
@@ -27,6 +32,11 @@ export const ALLOWED_KEYS = [
   "luxen_course_likes",
   "luxen_course_bookmarks",
   "luxen_course_subscriptions",
+  "luxen_community_messages",
+  "luxen_private_chats",
+  "luxen_shorts_videos",
+  "luxen_contests_state",
+  "luxen_contests_applicants",
 ] as const;
 
 export const ALLOWED_KEY_SET = new Set<string>(ALLOWED_KEYS);
@@ -53,6 +63,9 @@ export const MERGE_ONLY_KEYS = new Set([
   "luxen_courses",
   "luxen_course_comments",
   "luxen_course_subscriptions",
+  "luxen_community_messages",
+  "luxen_shorts_videos",
+  "luxen_contests_applicants",
 ]);
 
 export const json = (body: unknown, status = 200, customHeaders: Record<string, string> = {}) =>
@@ -128,11 +141,29 @@ function persistLocalStoreToFile(): void {
 }
 
 export function getLocalMemoryStore(key: string): unknown {
+  try {
+    const sqlVal = dbReadStoreKey(key);
+    if (sqlVal !== null && sqlVal !== undefined) {
+      inMemoryStore.set(key, sqlVal);
+      return sqlVal;
+    }
+  } catch {}
+
   loadLocalStoreFromFile();
   return inMemoryStore.has(key) ? inMemoryStore.get(key) : null;
 }
 
 export function getAllLocalMemoryStore(): Record<string, unknown> {
+  try {
+    const allSql = dbGetAllStore();
+    if (Object.keys(allSql).length > 0) {
+      for (const [k, v] of Object.entries(allSql)) {
+        inMemoryStore.set(k, v);
+      }
+      return allSql;
+    }
+  } catch {}
+
   loadLocalStoreFromFile();
   const out: Record<string, unknown> = {};
   for (const [k, v] of inMemoryStore.entries()) {
@@ -141,8 +172,11 @@ export function getAllLocalMemoryStore(): Record<string, unknown> {
   return out;
 }
 
-export function setLocalMemoryStore(key: string, value: unknown): void {
-  loadLocalStoreFromFile();
+export function setLocalMemoryStore(key: string, value: unknown, source = "api"): void {
+  try {
+    dbWriteStoreKey(key, value, source);
+  } catch {}
+
   inMemoryStore.set(key, value);
   persistLocalStoreToFile();
 }

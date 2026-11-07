@@ -107,4 +107,19 @@ describe("Database & Auth Integration", () => {
     const memRetrieved = getLocalMemoryStore("luxen_general_cards");
     expect(memRetrieved).toEqual(testCard);
   });
+
+  it("stores data directly into real SQLite relational database tables", async () => {
+    const { getDatabase, dbFindUser, dbReadStoreKey } = await import("@/lib/database.server");
+    const db = getDatabase();
+    expect(db).toBeDefined();
+
+    // Check users table exists and contains admin
+    const admin = dbFindUser("admin@elevate.com");
+    expect(admin).toBeDefined();
+    expect(admin?.isAdmin).toBe(true);
+
+    // Verify SQL read of store keys
+    const cards = dbReadStoreKey("luxen_general_cards");
+    expect(Array.isArray(cards)).toBe(true);
+  });
 });

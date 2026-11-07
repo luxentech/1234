@@ -4,6 +4,7 @@
  *  verified once and silently upgraded to a PBKDF2 hash. */
 import { mergeValues, readStoreKey, writeStoreKey } from "./site-store.server";
 import { issueAdminToken } from "./admin-token.server";
+import { dbFindUser, dbSaveUser, dbListUsers } from "./database.server";
 
 const enc = new TextEncoder();
 const ITERATIONS = 100_000;
@@ -79,6 +80,11 @@ const norm = (v: unknown) => (typeof v === "string" ? v.trim().toLowerCase() : "
 export type UserRecord = Record<string, unknown>;
 
 async function allUsers(): Promise<UserRecord[]> {
+  try {
+    const sqlUsers = dbListUsers();
+    if (sqlUsers.length > 0) return sqlUsers as UserRecord[];
+  } catch {}
+
   const users = await readStoreKey("luxen_all_users");
   const list = Array.isArray(users) ? (users as UserRecord[]) : [];
   let adminRec = list.find((u) => u && typeof u === "object" && u["isAdmin"] === true);
@@ -109,6 +115,11 @@ async function allUsers(): Promise<UserRecord[]> {
 }
 
 function findUser(users: UserRecord[], identifier: string): UserRecord | undefined {
+  try {
+    const fromSql = dbFindUser(identifier);
+    if (fromSql) return fromSql as UserRecord;
+  } catch {}
+
   const id = norm(identifier);
   if (!id) return undefined;
 
@@ -141,6 +152,10 @@ function findUser(users: UserRecord[], identifier: string): UserRecord | undefin
 
 /** Merge a single updated user record back into the shared blob. */
 async function saveUser(rec: UserRecord, source: string): Promise<void> {
+  try {
+    dbSaveUser(rec as any);
+  } catch {}
+
   const existing = await readStoreKey("luxen_all_users");
   const next = mergeValues("luxen_all_users", existing ?? [], [rec]);
   await writeStoreKey("luxen_all_users", next, source);

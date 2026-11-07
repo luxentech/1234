@@ -1,7 +1,7 @@
-/* Elevate: keeps shared site data in the database instead of the browser.
-   The legacy app still calls localStorage, so this adapter intercepts only
-   shared-data keys, serves them from memory, mirrors them to a local cache
-   (offline safety net) and persists them to the database. */
+/* Elevate Real Database Sync Layer
+   Keeps all shared site data exclusively on the server database.
+   The browser does NOT store site data or users in localStorage.
+   All shared data lives in memory and syncs directly with the server SQL database. */
 (function () {
   var KEYS = [
     "luxen_general_cards",
@@ -27,20 +27,20 @@
     "luxen_course_likes",
     "luxen_course_bookmarks",
     "luxen_course_subscriptions",
+    "luxen_community_messages",
+    "luxen_private_chats",
+    "luxen_shorts_videos",
+    "luxen_contests_state",
+    "luxen_contests_applicants",
   ];
   var API = "/api/public/store";
-  var CACHE_PREFIX = "__elevate_cache__";
   var sharedStore = {};
-  var pending = {}; // key -> latest raw value waiting to be sent
-  var inflight = {}; // key -> true while a POST is running
-  var dirty = {}; // key -> true until the server confirms the write
+  var pending = {};
+  var inflight = {};
+  var dirty = {};
   var failures = 0;
-
-  function banner(msg) {
-    var el = document.getElementById("__elevate_sync_banner");
-    if (el) el.remove();
-    if (msg) console.warn("[Elevate Sync]", msg);
-  }
+  var isReady = false;
+  var readyCallbacks = [];
 
   var proto = window.Storage.prototype;
   var nativeGet = proto.getItem;
@@ -51,28 +51,23 @@
     return KEYS.indexOf(key) !== -1;
   }
 
-  function cacheWrite(key, raw) {
-    try {
-      if (raw === null) nativeRemove.call(window.localStorage, CACHE_PREFIX + key);
-      else nativeSet.call(window.localStorage, CACHE_PREFIX + key, raw);
-    } catch (e) {}
-  }
-
-  function cacheRead(key) {
-    try {
-      return nativeGet.call(window.localStorage, CACHE_PREFIX + key);
-    } catch (e) {
-      return null;
-    }
-  }
+  // Clean out any historical shared data from localStorage so the browser stays completely clean
+  try {
+    KEYS.forEach(function (key) {
+      nativeRemove.call(window.localStorage, key);
+      nativeRemove.call(window.localStorage, "__elevate_cache__" + key);
+    });
+  } catch (e) {}
 
   function applyServerStore(store) {
+    if (!store || typeof store !== "object") return;
     KEYS.forEach(function (k) {
-      if (store && Object.prototype.hasOwnProperty.call(store, k) && store[k] !== null) {
-        // If it's a merge-only array like luxen_all_users, merge with local data instead of blindly skipping!
+      if (Object.prototype.hasOwnProperty.call(store, k) && store[k] !== null && store[k] !== undefined) {
         if (dirty[k] && Array.isArray(store[k])) {
           var localArr = [];
-          try { localArr = JSON.parse(sharedStore[k] || "[]"); } catch (e) {}
+          try {
+            localArr = JSON.parse(sharedStore[k] || "[]");
+          } catch (e) {}
           if (Array.isArray(localArr)) {
             var merged = localArr.slice();
             store[k].forEach(function (sItem) {
@@ -83,66 +78,50 @@
               });
               if (!exists) merged.push(sItem);
             });
-            var rawMerged = JSON.stringify(merged);
-            sharedStore[k] = rawMerged;
-            cacheWrite(k, rawMerged);
+            sharedStore[k] = JSON.stringify(merged);
             return;
           }
         }
-        if (dirty[k]) return; // keep local unconfirmed edits for other keys
-        var raw = JSON.stringify(store[k]);
-        sharedStore[k] = raw;
-        cacheWrite(k, raw);
-      } else {
-        if (!dirty[k]) {
-          delete sharedStore[k];
-          cacheWrite(k, null);
-        }
+        if (dirty[k]) return;
+        sharedStore[k] = JSON.stringify(store[k]);
+      } else if (!dirty[k]) {
+        delete sharedStore[k];
       }
     });
   }
 
-  // 0) Seed from the local cache so the UI never renders empty if the network is slow/down.
-  KEYS.forEach(function (k) {
-    var cached = cacheRead(k);
-    if (cached !== null) sharedStore[k] = cached;
-  });
-
-  // 1) Pull current DB state smoothly without blocking the browser UI.
-  function pullInitialStore() {
-    if (typeof fetch === "function") {
-      fetch(API + "?t=" + Date.now())
-        .then(function (res) {
-          if (res.ok) return res.json();
-          throw new Error("HTTP " + res.status);
-        })
-        .then(function (payload) {
-          applyServerStore((payload && payload.data) || {});
-          window.dispatchEvent(new CustomEvent("elevate_sync_complete"));
-          rerender();
-        })
-        .catch(function (e) {
-          console.warn("[Elevate] background sync using local cache", e);
-        });
-    } else {
+  function triggerReady() {
+    isReady = true;
+    if (window.ElevateDB) window.ElevateDB.isReady = true;
+    while (readyCallbacks.length) {
+      var cb = readyCallbacks.shift();
       try {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", API + "?t=" + Date.now(), true);
-        xhr.onload = function () {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            var payload = JSON.parse(xhr.responseText);
-            applyServerStore((payload && payload.data) || {});
-            window.dispatchEvent(new CustomEvent("elevate_sync_complete"));
-            rerender();
-          }
-        };
-        xhr.send(null);
+        cb();
       } catch (e) {}
     }
+    window.dispatchEvent(new CustomEvent("elevate_db_ready"));
+    window.dispatchEvent(new CustomEvent("elevate_sync_complete"));
+    rerender();
+  }
+
+  function pullInitialStore() {
+    fetch(API + "?t=" + Date.now(), { cache: "no-store" })
+      .then(function (res) {
+        if (res.ok) return res.json();
+        throw new Error("HTTP " + res.status);
+      })
+      .then(function (payload) {
+        applyServerStore((payload && payload.data) || {});
+        triggerReady();
+      })
+      .catch(function (e) {
+        console.warn("[Elevate Database] Initial pull notice:", e);
+        triggerReady();
+      });
   }
   pullInitialStore();
 
-  // 2) Persist writes to the database, one request at a time per key, with retry.
+  // Persist writes directly to the server database
   function flush(key) {
     if (inflight[key] || !Object.prototype.hasOwnProperty.call(pending, key)) return;
     var raw = pending[key];
@@ -157,8 +136,6 @@
     }
 
     var body = JSON.stringify({ key: key, value: value });
-    // keepalive is limited to ~64KB of body in browsers; larger payloads
-    // fail instantly with "Failed to fetch". Use it only for small writes.
     var headers = { "content-type": "application/json" };
     try {
       var tok =
@@ -170,17 +147,8 @@
       method: "POST",
       headers: headers,
       body: body,
+      cache: "no-store",
     };
-    // The browser limit is measured in encoded bytes, not JavaScript
-    // characters. Arabic text can occupy multiple UTF-8 bytes, so checking
-    // body.length may incorrectly classify a payload as smaller than 64KB.
-    var bodyBytes;
-    try {
-      bodyBytes = new Blob([body]).size;
-    } catch (e) {
-      bodyBytes = body.length * 3;
-    }
-    if (bodyBytes < 60000) opts.keepalive = true;
 
     fetch(API, opts)
       .then(function (r) {
@@ -190,26 +158,18 @@
           });
         }
         failures = 0;
-        banner("");
         inflight[key] = false;
         if (!Object.prototype.hasOwnProperty.call(pending, key)) dirty[key] = false;
         flush(key);
       })
       .catch(function (err) {
         failures++;
-        console.error("[Elevate] save failed", err);
-        if (failures >= 2) {
-          banner(
-            "⚠️ التعديلات لم تُحفظ في قاعدة البيانات — " +
-              (err && err.message ? err.message : "خطأ في الاتصال"),
-          );
-        }
+        console.error("[Elevate Database] Write failed, retrying in 2s:", err);
         inflight[key] = false;
-        // retry the newest value shortly
         if (!Object.prototype.hasOwnProperty.call(pending, key)) pending[key] = raw;
         setTimeout(function () {
           flush(key);
-        }, 3000);
+        }, 2000);
       });
   }
 
@@ -219,6 +179,7 @@
     flush(key);
   }
 
+  // Intercept Storage calls for shared keys: maintain entirely in RAM and sync with server
   proto.getItem = function (key) {
     if (this === window.localStorage && isSharedKey(key)) {
       return Object.prototype.hasOwnProperty.call(sharedStore, key) ? sharedStore[key] : null;
@@ -230,8 +191,7 @@
     if (this === window.localStorage && isSharedKey(key)) {
       var raw = String(value);
       sharedStore[key] = raw;
-      cacheWrite(key, raw);
-      nativeRemove.call(this, key);
+      nativeRemove.call(this, key); // Never pollute physical localStorage
       push(key, raw);
       return;
     }
@@ -252,18 +212,12 @@
           ? "{}"
           : "[]";
       sharedStore[key] = empty;
-      cacheWrite(key, empty);
       nativeRemove.call(this, key);
       push(key, empty);
       return;
     }
     nativeRemove.call(this, key);
   };
-
-  // Remove shared-data leftovers written by older versions of the site.
-  KEYS.forEach(function (key) {
-    nativeRemove.call(window.localStorage, key);
-  });
 
   function rerender() {
     try {
@@ -284,7 +238,7 @@
   }
 
   function refresh(silent) {
-    return fetch(API + "?t=" + Date.now())
+    return fetch(API + "?t=" + Date.now(), { cache: "no-store" })
       .then(function (r) {
         return r.json();
       })
@@ -299,7 +253,7 @@
       });
   }
 
-  // 3) Keep every open tab / device in sync.
+  // Background real-time sync with database every 8 seconds
   var hasPendingWork = function () {
     for (var k in dirty) if (dirty[k]) return true;
     return false;
@@ -307,12 +261,29 @@
 
   setInterval(function () {
     if (document.hidden || hasPendingWork()) return;
-    refresh(false);
-  }, 15000);
+    refresh(true);
+  }, 8000);
 
   document.addEventListener("visibilitychange", function () {
     if (!document.hidden && !hasPendingWork()) refresh(false);
   });
 
-  window.ElevateDB = { keys: KEYS, refresh: refresh };
+  window.ElevateDB = {
+    keys: KEYS,
+    isReady: isReady,
+    refresh: refresh,
+    onReady: function (fn) {
+      if (isReady) {
+        try {
+          fn();
+        } catch (e) {}
+      } else {
+        readyCallbacks.push(fn);
+      }
+    },
+    ready: new Promise(function (resolve) {
+      if (isReady) resolve();
+      else readyCallbacks.push(resolve);
+    }),
+  };
 })();

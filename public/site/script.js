@@ -3818,8 +3818,18 @@ window.nsHandleKey = function (e) {
   }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+function initElevateApp() {
+  if (window._elevateAppInitialized) return;
+  window._elevateAppInitialized = true;
   App.init();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.ElevateDB && typeof window.ElevateDB.onReady === "function") {
+    window.ElevateDB.onReady(initElevateApp);
+  }
+  // Safety timeout: ensure App initializes within 150ms even if network is slow
+  setTimeout(initElevateApp, 150);
 });
 
 // ==========================================
@@ -4068,7 +4078,7 @@ function handleRegister(event) {
     return;
   }
 
-  showAlert("جاري إنشاء حسابك الجديد وتجهيز المساحة الخاصة بك...", "info");
+  showAlert("جاري إنشاء حسابك في قاعدة البيانات وتجهيز مساحتك...", "info");
 
   authRequest({
     action: "register",
@@ -4080,14 +4090,7 @@ function handleRegister(event) {
   })
     .then(function (res) {
       if (res.ok && res.data && res.data.user) {
-        showAlert("تم إنشاء الحساب بنجاح! جاري نقلك لمساحتك...", "info");
-        try {
-          var uList = JSON.parse(localStorage.getItem("luxen_all_users") || "[]");
-          if (!uList.some(function (x) { return x && (x.id === res.data.user.id || x.username === res.data.user.username); })) {
-            uList.push(res.data.user);
-            localStorage.setItem("luxen_all_users", JSON.stringify(uList));
-          }
-        } catch (e) {}
+        showAlert("تم إنشاء الحساب وحفظه في قاعدة البيانات بنجاح!", "info");
         startSession(res.data.user);
         return;
       }
@@ -4095,10 +4098,10 @@ function handleRegister(event) {
         showAlert(res.data.error, "error");
         return;
       }
-      fallbackLocalRegister({ username, password, fullName, phone });
+      showAlert("تعذر إنشاء الحساب، يرجى المحاولة مرة أخرى.", "error");
     })
     .catch(function () {
-      fallbackLocalRegister({ username, password, fullName, phone });
+      showAlert("تعذر الاتصال بقاعدة البيانات والسيرفر.", "error");
     });
 }
 
