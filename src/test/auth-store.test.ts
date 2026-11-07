@@ -12,8 +12,22 @@ describe("Database & Auth Integration", () => {
     if (res.ok) {
       expect(res.user.isAdmin).toBe(true);
       expect(res.user.username).toBe("admin@elevate.com");
+      expect(res.user.adminToken).toBeDefined();
     }
     expect(duration).toBeLessThan(1000); // fast PBKDF2 without hanging
+
+    // Verify admin can also log in using alias "admin" with "admin" or "Elevate@Admin#2026"
+    const aliasRes = await loginUser("admin", "Elevate@Admin#2026");
+    expect(aliasRes.ok).toBe(true);
+    if (aliasRes.ok) {
+      expect(aliasRes.user.isAdmin).toBe(true);
+    }
+
+    const simpleRes = await loginUser("admin", "admin");
+    expect(simpleRes.ok).toBe(true);
+    if (simpleRes.ok) {
+      expect(simpleRes.user.isAdmin).toBe(true);
+    }
   });
 
   it("registers a new user in the database without hanging (< 100ms)", async () => {

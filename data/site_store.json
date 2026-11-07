@@ -3,6 +3,7 @@
     {
       "id": "admin_001",
       "username": "admin@elevate.com",
+      "email": "admin@elevate.com",
       "fullName": "المدير العام",
       "phone": "01000000000",
       "password": "",
@@ -11,10 +12,10 @@
       "isOnline": true,
       "join_date": "٧‏/١١‏/٢٠٢٦",
       "join_timestamp": 1794061916917,
-      "password_hash": "pbkdf2$100000$uhnDzeH2keGwfS0sf4rqPw==$oGiOe4hxAWkmY3jJgYJmuiirxyGY0JUfc3ACM/qEdds=",
+      "password_hash": "pbkdf2$100000$l0rFWm9CEbajGiHPE8f0GQ==$gWeGIz/XP5i9pkxA4Uvefg6vrCNZKycD4BiMj1OLsTg=",
       "failed_attempts": 0,
       "locked_until": 0,
-      "last_login": 1794064245729
+      "last_login": 1794065150062
     },
     {
       "id": "teacher_1794060539829",
@@ -253,6 +254,60 @@
       "join_date": "٧‏/١١‏/٢٠٢٦",
       "join_timestamp": 1794064246346,
       "last_login": 1794064246851
+    },
+    {
+      "id": "usr_1794065150171_xfeder",
+      "username": "testuser_1794065150170",
+      "fullName": "مستخدم تجريبي",
+      "phone": "01234567890",
+      "email": "",
+      "password": "",
+      "password_hash": "pbkdf2$100000$5Bpli2O9DiSfjychkCk/6g==$BK//lN6OcAEabPQyMGAC0KPw1aAMZZ1NVeaLh9ezFQw=",
+      "isAdmin": false,
+      "isActive": true,
+      "isOnline": true,
+      "failed_attempts": 0,
+      "locked_until": 0,
+      "join_date": "٧‏/١١‏/٢٠٢٦",
+      "join_timestamp": 1794065150322,
+      "last_login": 1794065150433
+    },
+    {
+      "id": "usr_google_1794065150441",
+      "username": "googleuser_1794065150438_c19x",
+      "email": "googleuser_1794065150438@gmail.com",
+      "fullName": "مستخدم جوجل تجريبي",
+      "phone": "",
+      "password": "",
+      "password_hash": "",
+      "provider": "google",
+      "googleId": "gid_123456",
+      "avatar": "",
+      "isAdmin": false,
+      "isActive": true,
+      "isOnline": true,
+      "failed_attempts": 0,
+      "locked_until": 0,
+      "join_date": "٧‏/١١‏/٢٠٢٦",
+      "join_timestamp": 1794065150441,
+      "last_login": 1794065150449
+    },
+    {
+      "id": "usr_1794065150455_fy39yw",
+      "username": "multilogin_1794065150454",
+      "fullName": "مستخدم متعدد الدخول",
+      "phone": "01199218230",
+      "email": "multi_1794065150454@elevate.com",
+      "password": "",
+      "password_hash": "pbkdf2$100000$bg9q/pLC2hZt1gsnryZ/lQ==$tHYLn+zC7nOxBvjaxohSQd5yQOVUSe2G+YVf75X6blA=",
+      "isAdmin": false,
+      "isActive": true,
+      "isOnline": true,
+      "failed_attempts": 0,
+      "locked_until": 0,
+      "join_date": "٧‏/١١‏/٢٠٢٦",
+      "join_timestamp": 1794065150561,
+      "last_login": 1794065150902
     }
   ],
   "luxen_general_cards": [
